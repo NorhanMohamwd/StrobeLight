@@ -9,3 +9,15 @@ StrobeLight/StrobeLight/Debug/Makefile
 StrobeLight/StrobeLight/Debug/makedep.mk
 StrobeLight/StrobeLight/Debug/main.o
 StrobeLight/StrobeLight/Debug/main.d
+StrobeLight/StrobeLight/Debug/APP/App.d
+StrobeLight/StrobeLight/Debug/APP/App.o
+StrobeLight/StrobeLight/Debug/HAL/Button/Button.d
+StrobeLight/StrobeLight/Debug/HAL/Button/Button.o
+StrobeLight/StrobeLight/Debug/HAL/Led/Led.d
+StrobeLight/StrobeLight/Debug/HAL/Led/Led.o
+StrobeLight/StrobeLight/Debug/MCAL/Dio/Dio_config.d
+StrobeLight/StrobeLight/Debug/MCAL/Dio/Dio_config.o
+StrobeLight/StrobeLight/Debug/MCAL/Dio/Dio_program.d
+StrobeLight/StrobeLight/Debug/MCAL/Dio/Dio_program.o
+StrobeLight/StrobeLight/Debug/MCAL/Timer/Timer_program.d
+StrobeLight/StrobeLight/Debug/MCAL/Timer/Timer_program.o
