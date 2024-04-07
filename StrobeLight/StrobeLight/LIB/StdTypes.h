@@ -2,7 +2,7 @@
  * StdTypes.h
  *
  * Created: 4/7/2024 6:07:20 PM
- *  Author: nadam
+ *  Author: Nada Salloum - https://github.com/nadasalloum
  */ 
 
 
