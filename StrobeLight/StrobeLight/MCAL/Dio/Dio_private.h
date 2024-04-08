@@ -11,7 +11,7 @@
 
 #include "Dio_config.h"
 
-extern const DIO_PinStatus_t PinsStatusArray[TOTAL_PINS];  
-static void DIO_InitPin(DIO_Pin_Number pin,DIO_PinStatus_t status);
+extern const dio_pinStatus PinsStatusArray[TOTAL_PINS];  
+static void dio_initPin(dio_pinNumber pin,dio_pinStatus status); // only set the status of one pin at a time
 
 #endif /* DIO_PRIVATE_H_ */

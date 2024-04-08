@@ -8,17 +8,18 @@
 #include "Dio_interface.h"
 #include "Led.h"
 
-void LED_TurnOn  ( LED_t led ){
+void led_on  ( led_t led )
+{
 
-	
-	DIO_WritePin( led,HIGH);
-	
+
+	dio_writePin( led,HIGH);
+
 }
 
 
-void LED_TurnOff ( LED_t led )
+void led_off ( led_t led )
 {
-	
-	DIO_WritePin( led,LOW);
-	
+
+	dio_writePin( led,LOW);
+
 }

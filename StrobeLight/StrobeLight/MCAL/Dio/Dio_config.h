@@ -8,8 +8,8 @@
 
 #ifndef DIO_CONFIG_H_
 #define DIO_CONFIG_H_
-
-#define TOTAL_PINS  20
+/* Max Number of pins for Attiny16 MCU */
+#define TOTAL_PINS 20
 
 
 

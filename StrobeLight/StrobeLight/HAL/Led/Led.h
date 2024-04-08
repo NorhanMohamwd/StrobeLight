@@ -10,26 +10,19 @@
 #define LEDS_H_
 
 
-
-#define LEFT_IN PINC0
-#define RIGHT_IN PINB0
-#define BACK_IN PINB1
-#define BRAKE_IN PINB2
-
 typedef enum
 {
-	LEFT_OUT   =PINC3  ,
-	RIGHT_OUT  =PINC2  ,
-	BACK_OUT   =PINC1  ,
-	BRAKE_OUT  =PINB5  ,
-	PIN_LED    =PINA2 ,
+	LEFT_OUT   =PINC3,
+	RIGHT_OUT  =PINC2,
+	BACK_OUT   =PINC1,
+	BRAKE_OUT  =PINB5,
+	PIN_LED    =PINA2,
 	POWER_OFF  =PINA1,
-} LED_t ;
+} led_t ;
 
 
-
-void LED_TurnOn  ( LED_t led );
-void LED_TurnOff ( LED_t led );
+void led_on  ( led_t led );
+void led_off ( led_t led );
 
 
 
