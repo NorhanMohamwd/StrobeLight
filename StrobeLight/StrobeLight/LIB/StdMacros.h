@@ -13,10 +13,10 @@
 #define SET_BIT(REG,BIT) (REG|=(1<<BIT))
 
 /* Clear a certain bit in any register */
-#define CLEAR_BIT(REG,BIT) (REG&=(~(1<<BIT)))
+#define CLEAR_BIT(REG,BIT) (REG &=(~(1<<BIT)))
 
 /* Toggle a certain bit in any register */
-#define TOGGLE_BIT(REG,BIT) (REG^=(1<<BIT))
+#define TOGGLE_BIT(REG,BIT) (REG ^=(1<<BIT))
 
 /* Rotate right the register value with specific number of rotates */
 #define ROR(REG,num) ( REG= (REG>>num) | (REG<<(8-num)) )
@@ -25,12 +25,17 @@
 #define ROL(REG,num) ( REG= (REG<<num) | (REG>>(8-num)) )
 
 /* Check if a specific bit is set in any register and return true if yes */
-#define BIT_IS_SET(REG,BIT) ( REG & (1<<BIT) )
+//#define BIT_IS_SET(REG,BIT) ( REG & (1<<BIT) )
 
-/* Check if a specific bit is cleared in any register and return true if yes */
+// Check if a specific bit is cleared in any register and return true if yes */
 #define BIT_IS_CLEAR(REG,BIT) ( !(REG & (1<<BIT)) )
 
 
-
+/* Read a certain bit in any register */
+#define  GET_BIT(REG,BIT)  ((REG>>BIT)&1)
+/* Toggle the whole register at once */
+#define  TOG_REG(REG)       (REG=REG^0XFF)
+/* Read the whole register at once */
+#define GET_REG(REG)        (REG&0XFF)
 
 #endif /* STDMACROS_H_ */
