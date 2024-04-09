@@ -10,6 +10,7 @@
 #define TIMER_PRIVATE_H_
 
 
+static uint32_t calculatePrescaler (uint8_t g_prescaler);
 
 
 

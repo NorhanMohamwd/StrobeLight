@@ -9,7 +9,7 @@
 #ifndef TIMER_CONFIG_H_
 #define TIMER_CONFIG_H_
 
-
+#define TIMER_MAX_TICKS   65536   
 
 
 
