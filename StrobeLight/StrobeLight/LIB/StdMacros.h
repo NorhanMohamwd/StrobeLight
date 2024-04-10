@@ -3,7 +3,8 @@
  *
  * Created: 4/7/2024 7:10:56 PM
  *  Author: Norhan Mohamed - https://github.com/NorhanMohamwd
- */ 
+ *  Author : Nada Salloum - https://github.com/nadasalloum
+ */      
 
 
 #ifndef STDMACROS_H_

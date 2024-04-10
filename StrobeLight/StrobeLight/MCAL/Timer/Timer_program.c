@@ -7,9 +7,11 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "Timer_interface.h"
+#include "Wdt.h"
 #include "StdMacros.h"
 #include "StdTypes.h"
-
+static volatile void (*g_timerCallBackPtr)(void)=NULLPTR;
+uint8_t gl_prescaler;
 void Timer_init(const Timer_configType * Config_ptr){
 	if (Config_ptr-> timer == TIMERA)
 	{	timerName = TIMERA;
@@ -160,13 +162,13 @@ void Timer_resetWDG(void){
 	if (overFlows==15)
 	{
 		overFlows=0;
-		/*reset wdg*/
+		wdt_reset();
 	}
 }
 
 ISR(TCB0_INT_vect){
 	if(g_timerCallBackPtr != NULLPTR){
-		(*g_timerCallBackPtr)();
+		g_timerCallBackPtr();
 	}
 }
 

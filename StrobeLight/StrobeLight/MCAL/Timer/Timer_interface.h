@@ -11,8 +11,7 @@
 #include "StdTypes.h"
 #include "Timer_config.h"
 
-static volatile void (*g_timerCallBackPtr)(void)=NULLPTR;
-uint8_t gl_prescaler;
+
 
 #define CPU_FREQUENCY	20000000
 #define REQUIRED_TICKS  55000
