@@ -2,8 +2,7 @@
  * App.h
  *
  * Created: 4/7/2024 9:11:31 PM
- *  Author: Nada Salloum - https://github.com/nadasalloum
-			Norhan Mohamed - https://github.com/NorhanMohamwd
+ *  Author: Norhan Mohamed - https://github.com/NorhanMohamwd
  */ 
 
 
@@ -13,5 +12,8 @@
 
 
 
+
+void app_init(void);
+void app_runnable(void);
 
 #endif /* APP_H_ */
