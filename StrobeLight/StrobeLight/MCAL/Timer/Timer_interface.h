@@ -20,6 +20,7 @@ uint8_t gl_prescaler;
 #define SPLITM		    0 
 #define DIR	            0
 #define OVF	            0
+#define CAPT			0
 #define ENABLE			0
 #define CMD1			3
 #define CMD0			2

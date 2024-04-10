@@ -155,6 +155,7 @@ void TimerB_setCallBack(void (*a_ptr)(void)){
 
 void Timer_resetWDG(void){
 	static uint8_t overFlows =0;
+	SET_BIT(TCB0_INTFLAGS,CAPT);
 	overFlows++;
 	if (overFlows==15)
 	{
