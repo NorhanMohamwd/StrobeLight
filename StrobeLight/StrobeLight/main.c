@@ -7,14 +7,15 @@
  */ 
 
 #include <avr/io.h>
-
+#include "app.h"
 
 int main(void)
 {
-    /* Replace with your application code */
+	
+    app_init();
     while (1) 
     {
-		/*output function*/
+		app_runnable();
     }
 }
 
