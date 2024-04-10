@@ -9,7 +9,7 @@
 #ifndef LEDS_H_
 #define LEDS_H_
 
-
+#define TOTAL_LEDS 5
 typedef enum
 {
 	LEFT_OUT   =PINC3,
@@ -20,7 +20,7 @@ typedef enum
 	POWER_OFF  =PINA1,
 } led_t ;
 
-
+void led_init(void);
 void led_on  ( led_t led );
 void led_off ( led_t led );
 
