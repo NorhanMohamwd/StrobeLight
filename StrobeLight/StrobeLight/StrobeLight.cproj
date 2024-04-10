@@ -65,7 +65,7 @@
   <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
   <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
   <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
-  <avrgcc.compiler.directories.IncludePaths><ListValues><Value>%24(PackRepoDir)\atmel\ATtiny_DFP\1.10.348\include\</Value><Value>../APP</Value><Value>../HAL</Value><Value>../HAL/Button</Value><Value>../HAL/Led</Value><Value>../LIB</Value><Value>../MCAL</Value><Value>../MCAL/Dio</Value><Value>../MCAL/Timer</Value><Value>../HAL/Delay</Value><Value>../MCAL/Interrupt</Value></ListValues></avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.directories.IncludePaths><ListValues><Value>%24(PackRepoDir)\atmel\ATtiny_DFP\1.10.348\include\</Value><Value>../APP</Value><Value>../HAL</Value><Value>../HAL/Button</Value><Value>../HAL/Led</Value><Value>../LIB</Value><Value>../MCAL</Value><Value>../MCAL/Dio</Value><Value>../MCAL/Timer</Value><Value>../HAL/Delay</Value><Value>../MCAL/Interrupt</Value><Value>../MCAL/Wdt</Value></ListValues></avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
   <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
   <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
@@ -87,7 +87,7 @@
   <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
   <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
   <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
-  <avrgcc.compiler.directories.IncludePaths><ListValues><Value>%24(PackRepoDir)\atmel\ATtiny_DFP\1.10.348\include\</Value><Value>../APP</Value><Value>../HAL</Value><Value>../HAL/Button</Value><Value>../HAL/Led</Value><Value>../LIB</Value><Value>../MCAL</Value><Value>../MCAL/Dio</Value><Value>../MCAL/Timer</Value><Value>../HAL/Delay</Value><Value>../MCAL/Interrupt</Value></ListValues></avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.directories.IncludePaths><ListValues><Value>%24(PackRepoDir)\atmel\ATtiny_DFP\1.10.348\include\</Value><Value>../APP</Value><Value>../HAL</Value><Value>../HAL/Button</Value><Value>../HAL/Led</Value><Value>../LIB</Value><Value>../MCAL</Value><Value>../MCAL/Dio</Value><Value>../MCAL/Timer</Value><Value>../HAL/Delay</Value><Value>../MCAL/Interrupt</Value><Value>../MCAL/Wdt</Value></ListValues></avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
   <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
   <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
@@ -166,6 +166,12 @@
     <Compile Include="MCAL\Timer\Timer_program.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\Wdt\Wdt.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCAL\Wdt\Wdt.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="HAL\Button" />
@@ -177,6 +183,7 @@
     <Folder Include="APP" />
     <Folder Include="MCAL\Dio" />
     <Folder Include="MCAL\Interrupt" />
+    <Folder Include="MCAL\Wdt" />
     <Folder Include="MCAL\Timer" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
