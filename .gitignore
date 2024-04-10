@@ -23,3 +23,7 @@ StrobeLight/StrobeLight/Debug/MCAL/Timer/Timer_program.d
 StrobeLight/StrobeLight/Debug/MCAL/Timer/Timer_program.o
 StrobeLight\.vs\StrobeLight\v14\.atsuo
 StrobeLight/.vs/StrobeLight/v14/.atsuo
+StrobeLight/StrobeLight/Debug/HAL/Delay/Delay.o
+StrobeLight/StrobeLight/Debug/HAL/Delay/Delay.d
+StrobeLight/StrobeLight/Debug/MCAL/Interrupt/Interrupt.d
+StrobeLight/StrobeLight/Debug/MCAL/Interrupt/Interrupt.o
