@@ -29,3 +29,5 @@ StrobeLight/StrobeLight/Debug/MCAL/Interrupt/Interrupt.d
 StrobeLight/StrobeLight/Debug/MCAL/Interrupt/Interrupt.o
 StrobeLight/StrobeLight/Debug/MCAL/Wdg/Wdg.o
 StrobeLight/StrobeLight/Debug/MCAL/Wdg/Wdg.d
+StrobeLight/StrobeLight/Debug/MCAL/Wdt/Wdt.d
+StrobeLight/StrobeLight/Debug/MCAL/Wdt/Wdt.o
