@@ -13,7 +13,7 @@
 
 
 
-#define CPU_FREQUENCY	20000000
+#define CPU_FREQUENCY	3300000
 #define REQUIRED_TICKS  55000
 
 #define SPLITM		    0 
