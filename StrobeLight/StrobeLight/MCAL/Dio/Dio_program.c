@@ -21,7 +21,8 @@ void dio_init(void)
 
 }
 
-static void dio_initPin(dio_pinNumber pin,dio_pinStatus status)
+//static void dio_initPin(dio_pinNumber pin,dio_pinStatus status)
+ void dio_initPin(dio_pinNumber pin,dio_pinStatus status)
 {
 
 	dio_portNumber port=pin/8;

@@ -57,6 +57,7 @@ typedef enum
 
 
 void dio_init(void)                                              ;            //To set the status of all pins at once (output, input, or pull-up).
+void dio_initPin(dio_pinNumber pin,dio_pinStatus status);
 void dio_writePin(dio_pinNumber pin,dio_pinVoltage_t voltage )   ;
 dio_pinVoltage_t dio_readPin(dio_pinNumber pin)                  ;
 void dio_togglePin(dio_pinNumber pin)                            ;
