@@ -15,10 +15,10 @@
 
 union signalsUnion{
 	volatile struct  {
-		uint8_t  LEFT      : 1;
 		uint8_t  RIGHT     : 1;
-		uint8_t  BRAKE     : 1;
 		uint8_t  BACK      : 1;
+		uint8_t  BRAKE     : 1;
+		uint8_t  LEFT      : 1;
 	} signal;
 	uint8_t value ;
 };

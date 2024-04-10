@@ -17,22 +17,23 @@ void button_init(void){
 
 union signalsUnion button_read(void){
 
-	uint8_t currentButtonRead= ((dio_readPort(PB) & 0xF8) | (dio_readPin(PINC0)<<3) );
+	uint8_t currentButtonRead= ((dio_readPort(PB) & 0x07) | (dio_readPin(PINC0)<<3) );
 	static  uint8_t previousButtonStage = 0xFF;
 	uint8_t diffButtonStage = currentButtonRead ^ previousButtonStage;
-	current.value=currentButtonRead;
-	diff.value= diffButtonStage;
+	result.value = 0;
+	current.value = currentButtonRead;
+	diff.value = diffButtonStage;
 			
-	if (current.signal.LEFT == LOW && diff.signal.LEFT == HIGH ){
+	if ((current.signal.LEFT == LOW ) && (diff.signal.LEFT == HIGH ) ){
 		result.signal.LEFT = HIGH;
 	}
-	else if (current.signal.RIGHT == LOW && diff.signal.RIGHT == HIGH){
+	else if ((current.signal.RIGHT == LOW ) && (diff.signal.RIGHT == HIGH )){
 		result.signal.RIGHT = HIGH;
 	}
-	else if (current.signal.BACK == LOW && diff.signal.BACK == HIGH){
+	else if ((current.signal.BACK == LOW ) && (diff.signal.BACK == HIGH )){
 		result.signal.BACK = HIGH;
 	}
-	else if (current.signal.BRAKE == LOW && diff.signal.BRAKE == HIGH){
+	else if ((current.signal.BRAKE == LOW ) && (diff.signal.BRAKE == HIGH )){
 		result.signal.BRAKE = HIGH;
 	}
 			
