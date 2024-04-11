@@ -12,7 +12,7 @@
 #include "StdTypes.h"
 static volatile void (*g_timerCallBackPtr)(void)=NULLPTR;
 uint8_t gl_prescaler;
-void Timer_init(const Timer_configType * Config_ptr){
+void Timer_init(const Timer_configType * Config_ptr , uint32_t ms){
 	if (Config_ptr-> timer == TIMERA)
 	{	timerName = TIMERA;
 		Timer_disable(timerName);
@@ -44,7 +44,15 @@ void Timer_init(const Timer_configType * Config_ptr){
 			TCB0_CTRLB = ( TCB0_CTRLB & 0xF8) | (Config_ptr->mode);
 			TCB0_CTRLA = ( TCB0_CTRLA & 0xF9) | (Config_ptr->prescaler <<1);
 			SET_BIT(TCB0_INTCTRL,CAPT);
-			TCB0_CCMP = REQUIRED_TICKS;
+			float timeTick_ms = ((float)1 / CPU_FREQUENCY) *1000 ;
+			float totalTicks = ms / timeTick_ms;
+			if (totalTicks > TIMER_MAX_TICKS ){
+				TCB0_CCMP = totalTicks / OVERFLOWS_NO;
+			}
+			else {
+				TCB0_CCMP = totalTicks;
+			}
+			
 			Timer_enable(timerName);
 		}
 	}
@@ -159,10 +167,11 @@ void Timer_resetWDG(void){
 	static uint8_t overFlows =0;
 	SET_BIT(TCB0_INTFLAGS,CAPT);
 	overFlows++;
-	if (overFlows==15)
+	if (overFlows==OVERFLOWS_NO)
 	{
 		overFlows=0;
-		wdt_reset();
+		wdt_init(WDT_PERIOD_1S);
+
 	}
 }
 

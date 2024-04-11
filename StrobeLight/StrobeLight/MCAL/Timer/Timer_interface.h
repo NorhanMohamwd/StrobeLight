@@ -13,18 +13,6 @@
 
 
 
-#define CPU_FREQUENCY	3300000
-#define REQUIRED_TICKS  55000
-
-#define SPLITM		    0 
-#define DIR	            0
-#define OVF	            0
-#define CAPT			0
-#define ENABLE			0
-#define CMD1			3
-#define CMD0			2
-#define CAPT			0
-
 
 
 typedef enum{
@@ -69,7 +57,7 @@ typedef struct {
 
 Timer_timerType timerName;
 
-void Timer_init(const Timer_configType * Config_ptr);
+void Timer_init(const Timer_configType * Config_ptr , uint32_t ms);
 void Timer_setDelay(uint32_t ms);
 void Timer_disable(Timer_timerType timerName);
 void Timer_enable(Timer_timerType timerName);

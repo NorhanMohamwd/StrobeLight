@@ -11,6 +11,20 @@
 
 #define TIMER_MAX_TICKS   65536   
 
+#define CPU_FREQUENCY	3300000
+//#define REQUIRED_TICKS  55000
+#define OVERFLOWS_NO		15
+
+#define SPLITM		    0
+#define DIR	            0
+#define OVF	            0
+#define CAPT			0
+#define ENABLE			0
+#define CMD1			3
+#define CMD0			2
+#define CAPT			0
+
+
 
 
 #endif /* TIMER_CONFIG_H_ */
