@@ -14,11 +14,13 @@
 #ifndef WDG_H_
 #define WDG_H_
 
+#include "wdt_config.h"
+
+#define CPU_CCP  _SFR_MEM8(0x0034)
+#define WDT_CTRLA  _SFR_MEM8(0x0100)
 
 
-
-void wdt_init(void);
-void wdt_reset(void);
-
+void wdt_init(wdt_period_t value);
+void wdt_deinit(void);
 
 #endif /* WDG_H_ */

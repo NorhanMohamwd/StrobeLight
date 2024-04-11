@@ -6,41 +6,24 @@
  */ 
 
 #include <avr/io.h>
-#include"StdMacros.h"
+#include "StdMacros.h"
 #include "Wdt.h"
-#include"wdt_config.h"
+#include "wdt_config.h"
 
-#define LOCK_PIN 7
-#define SYNCBUSY_PIN 0
-
-void wdt_init(void){
-    /****put lock in private.h as pin 7 set it to zero to enable writing in ctla register **/
-	CLEAR_BIT(WDT_STATUS,LOCK_PIN)  ;  
-	
-   /*******check if a previous write operation is in progress or not , the cMCU set that bit to zero after synchronization is finished*****/  
-	while (GET_BIT(WDT_STATUS,SYNCBUSY_PIN));
-	
-	/***** enable wdt Period mode *****/
-	WDT_CTRLA=WDT_PERIOD_1S; 
-	
-	
-	/****** lock thepin status to prevent software from changing the wdt value ***/                     
-	SET_BIT(WDT_STATUS,LOCK_PIN);
+void wdt_init(wdt_period_t value){
+	CPU_CCP = (0xD8<<0);
+	__asm__ __volatile__  ( "mov r16 , %0\n"
+	"STS 0x0100, r16\n"
+	::"r" (value)
+	);
+//	SET_BIT(WDT_STATUS,7);
 }
 
-
-void wdt_reset(void){
-
-	  /****put lock in private.h as pin 7 set it to zero to enable writing in ctla register **/
-	  CLEAR_BIT(WDT_STATUS,LOCK_PIN)  ;
-	  
-	  /*******check if a previous write operation is in progress or not , the cMCU set that bit to zero after synchronization is finished*****/
-	  while (GET_BIT(WDT_STATUS ,SYNCBUSY_PIN ));
-	  
-	  /***** enable wdt Period mode *****/
-	  WDT_CTRLA=WDT_PERIOD_1S;
-	  
-	  
-	  /****** lock thepin status to prevent software from changing the wdt value ***/
-	  SET_BIT(WDT_STATUS,LOCK_PIN);
+void wdt_deinit(void)
+{
+	CPU_CCP = (0xD8<<0);
+	__asm__ __volatile__  ( "ldi r16 , 0x00\n"
+	"STS 0x0100, r16\n"
+	::
+	);
 }
