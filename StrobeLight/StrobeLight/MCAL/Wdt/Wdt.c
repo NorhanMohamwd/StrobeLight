@@ -13,11 +13,11 @@
 
 
 
-void wdt_init(wdt_period_t value){
+void wdt_init(void){
 	CPU_CCP = (0xD8<<0);
 	__asm__ __volatile__  ( "mov r16 , %0\n"
 	"STS 0x0100, r16\n"
-	::"r" (value)
+	::"r" (wdt_period)
 	);
 //	SET_BIT(WDT_STATUS,7);
 }

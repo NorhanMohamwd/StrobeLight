@@ -17,7 +17,7 @@ uint8_t LEFT, RIGHT, BACK, BRAKE =LOW;
 
 void app_init(void)
 {
-	wdt_init(WDT_PERIOD_1S);
+	wdt_init();
 	button_init();
 	delay_init();
 	Timer_configType configTimerB = {TIMERB,PERIDIC_INTERRUPT,CLKDIV1,COUNTING_DOWN};

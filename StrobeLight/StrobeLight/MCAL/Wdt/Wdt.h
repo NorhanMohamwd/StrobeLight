@@ -14,13 +14,13 @@
 #ifndef WDG_H_
 #define WDG_H_
 
-#include "wdt_config.h"
+
 
 /* reset wdt to it's initial configurable value */
 #define wdt_reset() __asm__ __volatile__ ("wdr")
          
 /* Enable  the wdt with configurable value */
-void wdt_init(wdt_period_t value);
+void wdt_init(void);
 
 /* disable wdt */
 void wdt_deinit(void);

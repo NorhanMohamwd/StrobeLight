@@ -170,7 +170,7 @@ void Timer_resetWDG(void){
 	if (overFlows==OVERFLOWS_NO)
 	{
 		overFlows=0;
-		wdt_init(WDT_PERIOD_1S);
+		wdt_reset();
 
 	}
 }

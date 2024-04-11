@@ -8,7 +8,6 @@
 
 #include <avr/io.h>
 #include "app.h"
-#include "wdt_config.h"
 #include "wdt.h"
 #include "StdMacros.h"
 #include "Delay.h"
@@ -16,10 +15,12 @@
 
 int main(void)
  {
+	
 	app_init();
-
+ 
+	
     while (1) 
-    {
+    {  
 		app_runnable();
 	
     }

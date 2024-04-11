@@ -6,7 +6,7 @@
  */ 
 
 
-#ifndef WDT_CONFIG_H_
+#ifndef WDT_CONFIG_H_   
 #define WDT_CONFIG_H_
 
 
@@ -18,6 +18,6 @@ typedef enum {
  WDT_PERIOD_2S=0x09               // 2.048s
 }wdt_period_t;
 
-
+ wdt_period_t wdt_period = WDT_PERIOD_1S; 
 
 #endif /* WDT_CONFIG_H_ */
