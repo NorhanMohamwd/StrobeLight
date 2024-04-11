@@ -10,16 +10,18 @@
 #include "Led.h"
 #include "Timer_interface.h"
 #include "Interrupt.h"
+#include "Wdt.h"
 
 
 uint8_t LEFT, RIGHT, BACK, BRAKE =LOW;
 
 void app_init(void)
 {
+	wdt_init(WDT_PERIOD_1S);
 	button_init();
 	delay_init();
 	Timer_configType configTimerB = {TIMERB,PERIDIC_INTERRUPT,CLKDIV1,COUNTING_DOWN};
-	Timer_init(&configTimerB);
+	Timer_init(&configTimerB , 250);
 	TimerB_setCallBack(Timer_resetWDG);
 	enableGlobalInterrupt();
 }
