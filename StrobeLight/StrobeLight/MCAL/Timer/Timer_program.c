@@ -10,7 +10,7 @@
 #include "Wdt.h"
 #include "StdMacros.h"
 #include "StdTypes.h"
-static volatile void (*g_timerCallBackPtr)(void)=NULLPTR;
+static void (*g_timerCallBackPtr)(void)=NULLPTR;
 uint8_t gl_prescaler;
 void Timer_init(const Timer_configType * Config_ptr , uint32_t ms){
 	if (Config_ptr-> timer == TIMERA)

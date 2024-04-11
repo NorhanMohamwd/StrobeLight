@@ -7,8 +7,11 @@
 
 #include <avr/io.h>
 #include "StdMacros.h"
+#include "wdt_private.h"
 #include "Wdt.h"
 #include "wdt_config.h"
+
+
 
 void wdt_init(wdt_period_t value){
 	CPU_CCP = (0xD8<<0);

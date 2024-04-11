@@ -229,6 +229,9 @@
     <Compile Include="MCAL\Wdt\wdt_config.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCAL\Wdt\wdt_private.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="HAL\Button" />
