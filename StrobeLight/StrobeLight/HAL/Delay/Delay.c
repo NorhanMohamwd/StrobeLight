@@ -10,7 +10,7 @@
 void delay_init(void)
 {
 	Timer_configType configType={TIMERA,NORMAL_MODE,DIV1024,COUNTING_UP};
-	Timer_init(&configType , 250);
+	Timer_init(&configType , 195);
 }
 
 void delay_ms(uint32_t ms)
