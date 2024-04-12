@@ -19,14 +19,15 @@ void Timer_init(const Timer_configType * Config_ptr , uint32_t ms){
 		if (Config_ptr-> mode == NORMAL_MODE)
 		{
 			CLEAR_BIT(TCA0_SINGLE_CTRLB,SPLITM);	/*disable split mode*/
-			TCA0_SINGLE_CTRLB = (TCA0_SINGLE_CTRLB & 0xF8) | (Config_ptr->mode);
+			TCA0_SINGLE_CTRLB = (TCA0_SINGLE_CTRLB & 0xF8) | (Config_ptr->mode);		/*configures the mode*/
 		
 			if(Config_ptr->prescaler < 8 &&  Config_ptr->prescaler > -1)
 			{
-				TCA0_SINGLE_CTRLA = (TCA0_SINGLE_CTRLA & 0xF1) | (Config_ptr->prescaler <<1);
+				TCA0_SINGLE_CTRLA = (TCA0_SINGLE_CTRLA & 0xF1) | (Config_ptr->prescaler <<1);		/*configures the prescaler*/
 				gl_prescaler = Config_ptr->prescaler;
-			
-				if (Config_ptr->direction == COUNTING_DOWN)	
+				
+				/*configures the counting direction*/
+				if (Config_ptr->direction == COUNTING_DOWN)						
 				SET_BIT(TCA0_SINGLE_CTRLESET,DIR);
 				else if (Config_ptr->direction == COUNTING_UP)
 				SET_BIT(TCA0_SINGLE_CTRLECLR,DIR);
@@ -41,9 +42,11 @@ void Timer_init(const Timer_configType * Config_ptr , uint32_t ms){
 		Timer_disable(timerName);
 		if (Config_ptr-> mode == PERIDIC_INTERRUPT)
 		{
-			TCB0_CTRLB = ( TCB0_CTRLB & 0xF8) | (Config_ptr->mode);
-			TCB0_CTRLA = ( TCB0_CTRLA & 0xF9) | (Config_ptr->prescaler <<1);
-			SET_BIT(TCB0_INTCTRL,CAPT);
+			TCB0_CTRLB = ( TCB0_CTRLB & 0xF8) | (Config_ptr->mode);				/*configures the mode*/
+			TCB0_CTRLA = ( TCB0_CTRLA & 0xF9) | (Config_ptr->prescaler <<1);	/*configures the prescaler*/
+			SET_BIT(TCB0_INTCTRL,CAPT);											/*enables interrupt*/
+			
+			/*counts the value loaded in the compare register*/
 			float timeTick_ms = ((float)1 / CPU_FREQUENCY) *1000 ;
 			float totalTicks = ms / timeTick_ms;
 			if (totalTicks > TIMER_MAX_TICKS ){
@@ -109,8 +112,6 @@ static uint32_t calculatePrescaler (uint8_t g_prescaler){
 
 void Timer_setDelay(uint32_t ms)
 {
-	/*add top value*/
-	//TCA0_SINGLE_PER = ( ms *  CPU_FREQUENCY ) / (prescaler * 1000 * TIMER_MAX_TICKS);
 	uint32_t prescaler =  calculatePrescaler(gl_prescaler);
 	float timeTick_ms = ((float)prescaler / CPU_FREQUENCY) *1000 ;
 	TCA0_SINGLE_PER = ms / timeTick_ms;
@@ -149,7 +150,7 @@ bool_t Timer_getFlag(void)
 {
 	if (BIT_IS_SET(TCA0_SINGLE_INTFLAGS,OVF))
 	{
-		SET_BIT(TCA0_SINGLE_INTFLAGS,OVF);
+		SET_BIT(TCA0_SINGLE_INTFLAGS,OVF);			/*set the flag of overflow*/
 		return TRUE;
 	}
 	else
@@ -165,7 +166,7 @@ void TimerB_setCallBack(void (*a_ptr)(void)){
 
 void Timer_resetWDG(void){
 	static uint8_t overFlows =0;
-	SET_BIT(TCB0_INTFLAGS,CAPT);
+	SET_BIT(TCB0_INTFLAGS,CAPT);					/*set the flag of compare*/
 	overFlows++;
 	if (overFlows==OVERFLOWS_NO)
 	{

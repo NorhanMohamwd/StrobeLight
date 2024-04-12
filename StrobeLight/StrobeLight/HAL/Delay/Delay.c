@@ -16,10 +16,12 @@ void delay_init(void)
 void delay_ms(uint32_t ms)
 {	static uint8_t getFlag =0;
 	timerName=TIMERA;
-	Timer_setDelay(ms);
+	Timer_setDelay(ms);			/*pass the desired delay to the timer*/
 	Timer_enable(timerName);
 	getFlag= Timer_getFlag();
-	while(getFlag==FALSE){
+	
+	/*wait till the flag is raised*/
+	while(getFlag==FALSE){		
 		getFlag= Timer_getFlag();
 	}
 	getFlag=FALSE;

@@ -13,7 +13,11 @@
 
 #define INTERRUPT_PIN 7
 
+/************* API ***********/
+
+/*enables global interrupt*/
 void enableGlobalInterrupt(void);
+/*disables global interrupt*/
 void disableGlobalInterrupt(void);
 
 

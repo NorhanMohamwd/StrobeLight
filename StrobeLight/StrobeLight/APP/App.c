@@ -17,20 +17,20 @@ uint8_t LEFT, RIGHT, BACK, BRAKE =LOW;
 
 void app_init(void)
 {
-	wdt_init();
-	led_init();
-	button_init();
-	delay_init();
-	Timer_configType configTimerB = {TIMERB,PERIDIC_INTERRUPT,CLKDIV1,COUNTING_DOWN};
-	Timer_init(&configTimerB , 195);
-	TimerB_setCallBack(Timer_resetWDG);
-	enableGlobalInterrupt();
+	wdt_init();					/*initializes the wdt module*/
+	led_init();					/*initializes led module*/
+	button_init();				/*initializes button module*/
+	delay_init();				/*initializes delay module*/
+	Timer_configType configTimerB = {TIMERB,PERIDIC_INTERRUPT,CLKDIV1,COUNTING_DOWN};		/*create a configuration struct for TIMERB*/
+	Timer_init(&configTimerB , 195);			/*initializes TIMERB*/
+	TimerB_setCallBack(Timer_resetWDG);			/*sets the timer callback*/
+	enableGlobalInterrupt();					/*enables global interrupt*/
 }
 
 void app_runnable(void){
 	union signalsUnion signalProcessing;
-	signalProcessing = button_read();
-	if (signalProcessing.signal.LEFT == HIGH){
+	signalProcessing = button_read();		/*gets the processed values from button*/
+	if (signalProcessing.signal.LEFT == HIGH){		/*checks if the new value is LEFT*/
 		RIGHT = BACK = BRAKE = 0;
 		delay_ms(316);
 		LEFT = !LEFT;
@@ -55,7 +55,8 @@ void app_runnable(void){
 		signalProcessing.signal.BRAKE = LOW;
 	}
 	
-	if (LEFT)
+	/*checks which signal is on to turn on/off corresponding led*/
+	if (LEFT)						
 	{
 		led_on(LEFT_OUT);
 		led_off(RIGHT_OUT);

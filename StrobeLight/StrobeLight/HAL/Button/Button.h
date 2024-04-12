@@ -26,6 +26,8 @@ union signalsUnion current;
 union signalsUnion diff;
 union signalsUnion result;
 
+ /*** Typedefs ***/
+ 
 typedef enum
 {
 	LEFT_IN=PINC0,
@@ -35,7 +37,11 @@ typedef enum
  } button_t ;
 
 
+/************* API ***********/
+
+/*initializes all buttons as input pull up*/
 void button_init(void);
+/*reads the buttons' values*/
 union signalsUnion button_read(void);
 
 

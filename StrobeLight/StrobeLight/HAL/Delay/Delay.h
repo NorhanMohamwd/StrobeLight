@@ -12,7 +12,11 @@
 
 #include "StdTypes.h"
 
+/************* API ***********/
+
+/*initializes delay module*/
 void delay_init(void);
+/*runs the delay with conigurable value in milliseconds*/
 void delay_ms(uint32_t ms);
 
 

@@ -11,10 +11,8 @@
 #include "StdTypes.h"
 #include "Timer_config.h"
 
-
-
-
-
+ /*** Typedefs ***/
+ 
 typedef enum{
 	TIMERA,
 	TIMERB
@@ -47,7 +45,6 @@ typedef enum{
 }Timer_countDirection;
 
 
-
 typedef struct {
 	Timer_timerType timer;
 	Timer_modeType mode;
@@ -57,34 +54,22 @@ typedef struct {
 
 Timer_timerType timerName;
 
+/************* API ***********/
+
+/*initializes timer and runs the interrupt with configurable time in milliseconds*/
 void Timer_init(const Timer_configType * Config_ptr , uint32_t ms);
+/*runs the timer with configured delay*/
 void Timer_setDelay(uint32_t ms);
+/*disables timer*/
 void Timer_disable(Timer_timerType timerName);
+/*enables timer*/
 void Timer_enable(Timer_timerType timerName);
+/*gets the flag of overflow*/
 bool_t Timer_getFlag(void);
+/*sets the function that will run in the timer's ISR*/
 void TimerB_setCallBack(void (*a_ptr)(void));
+/*calls the function of resetting wdt*/
 void Timer_resetWDG(void);
-/*
-typedef enum{
-	NONE,
-	UPDATE,
-	RESTART,
-	RESET
-}Timer_counterCommands;
-*/
-
-
-/*
-typedef enum{
-	ErrorInMode,
-	ErrorInPrescaler
-}Timer_errorType;
-
-typedef enum {
-	SUCCESSFUL,
-	UNSUCCESSFUL
-}Timer_errorStatus;
-*/
 
 
 

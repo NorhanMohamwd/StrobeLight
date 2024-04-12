@@ -20,14 +20,15 @@ void button_init(void){
 
 union signalsUnion button_read(void){
 	dio_pinVoltage_t pinValue = dio_readPin(PINC0);
-	uint8_t currentButtonRead= ((dio_readPort(PB) & 0x07) | (pinValue<<3) );
-	static  uint8_t previousButtonStage = 0xFF;
-	uint8_t diffButtonStage = currentButtonRead ^ previousButtonStage;
+	uint8_t currentButtonRead= ((dio_readPort(PB) & 0x07) | (pinValue<<3) ); /*puts the four readings into one variable*/
+	static  uint8_t previousButtonStage = 0xFF;								/*initialize the previous state with HIGH*/
+	uint8_t diffButtonStage = currentButtonRead ^ previousButtonStage;		/*to process only the changed value and discard old ones*/
 	result.value = 0;
 	current.value = currentButtonRead;
 	diff.value = diffButtonStage;
-			
-	if ((current.signal.LEFT == LOW ) && (diff.signal.LEFT == HIGH ) ){
+	
+	/*checks that it's a new value and that it's low*/
+	if ((current.signal.LEFT == LOW ) && (diff.signal.LEFT == HIGH ) ){		
 		result.signal.LEFT = HIGH;
 	}
 	else if ((current.signal.RIGHT == LOW ) && (diff.signal.RIGHT == HIGH )){
@@ -40,7 +41,7 @@ union signalsUnion button_read(void){
 		result.signal.BRAKE = HIGH;
 	}
 			
-	previousButtonStage = currentButtonRead;
+	previousButtonStage = currentButtonRead;									/*save the current value in the previous one*/
 	return result;
 }
 

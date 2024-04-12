@@ -10,7 +10,9 @@
 #define TIMER_PRIVATE_H_
 
 
+/************* API ***********/
 
+/*takes the prescaler in hexadecimal and returns it in decimal form*/
 static uint32_t calculatePrescaler (uint8_t g_prescaler);
 
 
