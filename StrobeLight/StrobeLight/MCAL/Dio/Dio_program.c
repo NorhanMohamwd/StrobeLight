@@ -140,7 +140,7 @@ dio_pinVoltage_t dio_readPin(dio_pinNumber pin)
 		volt=GET_BIT(PORTB_IN,pin_num);
 		break;
 		case PC:
-		volt=GET_BIT(PORTC_IN,pin_num);
+		volt=BIT_IS_SET(PORTC_IN,pin_num);
 		break;
 	}
 	return volt;
@@ -178,10 +178,10 @@ void dio_writePort(dio_portNumber port,uint8_t value)
 		PORTA_OUT=value;
 		break;
 		case PB:
-		PORTA_OUT=value;
+		PORTB_OUT=value;
 		break;
 		case PC:
-		PORTA_OUT=value;
+		PORTB_OUT=value;
 		break;
 		default:
 		break;
