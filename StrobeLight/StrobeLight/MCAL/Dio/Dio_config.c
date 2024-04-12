@@ -7,6 +7,8 @@
 #include "Dio_interface.h" 
 #include "Dio_config.h"
 /* Array to configure individual pin functionalities (output, input, pull-up) */
+/*** To perform a bulk configuration of all pins in one go ***/
+/**Config ***/
 const dio_pinStatus PinsStatusArray[TOTAL_PINS]={
 	OUTPUT,      /* Port A Pin 0 */
 	OUTPUT,      /* Port A Pin 1 */

@@ -19,7 +19,7 @@
 /* reset wdt to it's initial configurable value */
 #define wdt_reset() __asm__ __volatile__ ("wdr")
          
-/* Enable  the wdt with configurable value */
+/* Enable  the wdt  */
 void wdt_init(void);
 
 /* disable wdt */

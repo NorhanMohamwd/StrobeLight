@@ -9,6 +9,8 @@
 #ifndef DIO_INTERFACE_H_
 #define DIO_INTERFACE_H_
 #include "StdTypes.h"
+
+ /*** Typedefs ***/
 typedef enum
 {
     PINA0=0,
@@ -54,11 +56,11 @@ typedef enum
 } dio_pinVoltage_t;
 
 
-
+/************* API ***********/
 
 void dio_init(void)                                              ;            //To set the status of all pins at once (output, input, or pull-up).
-void dio_initPin(dio_pinNumber pin,dio_pinStatus status);
-void dio_writePin(dio_pinNumber pin,dio_pinVoltage_t voltage )   ;
+void dio_initPin(dio_pinNumber pin,dio_pinStatus status)         ;           //To set the status of an individual pin at a time (output, input, or pull-up).
+void dio_writePin(dio_pinNumber pin,dio_pinVoltage_t voltage )   ;          
 dio_pinVoltage_t dio_readPin(dio_pinNumber pin)                  ;
 void dio_togglePin(dio_pinNumber pin)                            ;
 void dio_writePort(dio_portNumber port,uint8_t value)            ;

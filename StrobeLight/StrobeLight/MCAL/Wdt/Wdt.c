@@ -14,19 +14,20 @@
 
 
 void wdt_init(void){
+	/** wdt key protection */
 	CPU_CCP = (0xD8<<0);
 	__asm__ __volatile__  ( "mov r16 , %0\n"
 	"STS 0x0100, r16\n"
-	::"r" (wdt_period)
+	::"r" (wdt_period)  /* set timer interval with config value */
 	);
-//	SET_BIT(WDT_STATUS,7);
+
 }
 
 void wdt_deinit(void)
-{
+{   /** wdt key protection */
 	CPU_CCP = (0xD8<<0);
 	__asm__ __volatile__  ( "ldi r16 , 0x00\n"
-	"STS 0x0100, r16\n"
+	"STS 0x0100, r16\n" /* Turn off the wdt */
 	::
 	);
 }

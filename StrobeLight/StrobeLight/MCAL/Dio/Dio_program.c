@@ -10,7 +10,7 @@
 #include "Dio_interface.h"
 #include "Dio_private.h"
 
-
+ /**To set the status of all pins at once (output, input, or pull-up). **/
 void dio_init(void)
 {
 	dio_pinNumber i;
@@ -21,7 +21,7 @@ void dio_init(void)
 
 }
 
-//static void dio_initPin(dio_pinNumber pin,dio_pinStatus status)
+/***To set the status of an individual pin at a time (output, input, or pull-up)***/
  void dio_initPin(dio_pinNumber pin,dio_pinStatus status)
 {
 

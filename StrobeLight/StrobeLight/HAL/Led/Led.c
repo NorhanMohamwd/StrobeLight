@@ -20,7 +20,7 @@ void led_init(void)
 	dio_initPin(BRAKE_OUT, OUTPUT);
 	dio_initPin(POWER_OFF, OUTPUT);
 
-	// to turn off all the leds at the begging    
+	// to turn off all the leds at the begging (active low leds)     
 	dio_writePin(LEFT_OUT  ,HIGH);
 	dio_writePin(RIGHT_OUT ,HIGH);
 	dio_writePin(BACK_OUT  ,HIGH);
