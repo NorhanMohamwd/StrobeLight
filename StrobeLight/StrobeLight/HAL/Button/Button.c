@@ -5,6 +5,9 @@
  *  Author: Norhan Mohamed - https://github.com/NorhanMohamwd
  */ 
 #include "Button.h"
+#include "Dio_interface.h"
+#include "Dio_config.h"
+#include "Delay.h"
 
 
 
@@ -16,8 +19,8 @@ void button_init(void){
 }
 
 union signalsUnion button_read(void){
-
-	uint8_t currentButtonRead= ((dio_readPort(PB) & 0x07) | (dio_readPin(PINC0)<<3) );
+	dio_pinVoltage_t pinValue = dio_readPin(PINC0);
+	uint8_t currentButtonRead= ((dio_readPort(PB) & 0x07) | (pinValue<<3) );
 	static  uint8_t previousButtonStage = 0xFF;
 	uint8_t diffButtonStage = currentButtonRead ^ previousButtonStage;
 	result.value = 0;

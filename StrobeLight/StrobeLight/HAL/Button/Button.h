@@ -9,16 +9,15 @@
 #ifndef BUTTON_H_
 #define BUTTON_H_
 
-#include "Delay.h"
+#include "StdTypes.h"
 #include "Dio_interface.h"
-
 
 union signalsUnion{
 	volatile struct  {
-		uint8_t  RIGHT     : 1;
-		uint8_t  BACK      : 1;
-		uint8_t  BRAKE     : 1;
-		uint8_t  LEFT      : 1;
+		uint8_t  RIGHT     : 1;		/*PORT B PIN0*/
+		uint8_t  BACK      : 1;		/*PORT B PIN1*/
+		uint8_t  BRAKE     : 1;		/*PORT B PIN2*/
+		uint8_t  LEFT      : 1;		/*PORT C PIN0*/
 	} signal;
 	uint8_t value ;
 };
