@@ -12,6 +12,7 @@
 #include "StdTypes.h"
 static void (*g_timerCallBackPtr)(void)=NULLPTR;
 uint8_t gl_prescaler;
+uint32_t running=0;
 void Timer_init(const Timer_configType * Config_ptr , uint32_t ms){
 	if (Config_ptr-> timer == TIMERA)
 	{	timerName = TIMERA;
@@ -166,6 +167,9 @@ void TimerB_setCallBack(void (*a_ptr)(void)){
 
 void Timer_resetWDG(void){
 	static uint8_t overFlows =0;
+	if (running<TIME_RUNNING){
+	running++;
+	}
 	SET_BIT(TCB0_INTFLAGS,CAPT);					/*set the flag of compare*/
 	overFlows++;
 	if (overFlows==OVERFLOWS_NO)

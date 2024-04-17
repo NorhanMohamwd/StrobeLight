@@ -11,6 +11,8 @@
 #include "StdTypes.h"
 #include "Timer_config.h"
 
+extern uint32_t running;
+#define TIME_RUNNING	107784
  /*** Typedefs ***/
  
 typedef enum{
