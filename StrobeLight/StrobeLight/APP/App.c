@@ -17,21 +17,17 @@ uint8_t LEFT, RIGHT, BACK, BRAKE =LOW;
 
 void app_init(void)
 {   	
-	wdt_init();	
-	button_init();			            /*initializes the wdt module*/
-	led_init();					/*initializes led module*/
-						            /*initializes button module*/
-// 	//delay_init();				/*initializes delay module*/
-// 	Timer_configType configTimerB = {TIMERB,PERIDIC_INTERRUPT,CLKDIV1,COUNTING_DOWN};		/*create a configuration struct for TIMERB*/
-// 	Timer_init(&configTimerB , 195);			/*initializes TIMERB*/
-// 	TimerB_setCallBack(Timer_resetWDG);			/*sets the timer callback*/
-// 	enableGlobalInterrupt();					/*enables global interrupt*/
+	wdt_init();	                    /*initializes the watchdog timer module*/
+	button_init();			       /*initializes button module*/     
+	led_init();					  /*initializes led module*/					         
+	delay_init();				 /*initializes delay module*/
+	Timer_configType configTimerB = {TIMERB,PERIDIC_INTERRUPT,CLKDIV1,COUNTING_DOWN};		/*create a configuration struct for TIMERB*/
+	Timer_init(&configTimerB , 195);			/*initializes TIMERB*/
+	TimerB_setCallBack(Timer_resetWDG);			/*sets the timer callback*/
+	enableGlobalInterrupt();					/*enables global interrupt*/
 }
 
 void app_runnable(void){
-	while (running==TIME_RUNNING){
-		while(1);
-	}
 	union signalsUnion signalProcessing;
 	signalProcessing = button_read();		/*gets the processed values from button*/
 	if (signalProcessing.signal.LEFT == HIGH){		/*checks if the new value is LEFT*/
@@ -62,38 +58,38 @@ void app_runnable(void){
 	/*checks which signal is on to turn on/off corresponding led*/
 	if (LEFT)						
 	{
-		led_on(LEDS_PORTC,LEFT_OUT);
-		led_off(LEDS_PORTC,RIGHT_OUT);
-		led_off(LEDS_PORTC,BACK_OUT);
-		led_off(LEDS_PORTB,BRAKE_OUT);
+		led_on(LEFT_OUT);
+		led_off(RIGHT_OUT);
+		led_off(BACK_OUT);
+		led_off(BRAKE_OUT);
 	}
 	else if (RIGHT)
 	{
-		led_off(LEDS_PORTC,LEFT_OUT);
-		led_on(LEDS_PORTC,RIGHT_OUT);
-		led_off(LEDS_PORTC,BACK_OUT);
-		led_off(LEDS_PORTB,BRAKE_OUT);
+		led_off(LEFT_OUT);
+		led_on(RIGHT_OUT);
+		led_off(BACK_OUT);
+		led_off(BRAKE_OUT);
 	}
 	else if (BACK)
 	{
-		led_off(LEDS_PORTC,LEFT_OUT);
-		led_off(LEDS_PORTC,RIGHT_OUT);
-		led_on(LEDS_PORTC,BACK_OUT);
-		led_off(LEDS_PORTB,BRAKE_OUT);
+		led_off(LEFT_OUT);
+		led_off(RIGHT_OUT);
+		led_on(BACK_OUT);
+		led_off(BRAKE_OUT);
 	}
 	else if (BRAKE)
 	{
-		led_off(LEDS_PORTC,LEFT_OUT);
-		led_off(LEDS_PORTC,RIGHT_OUT);
-		led_off(LEDS_PORTC,BACK_OUT);
-		led_on(LEDS_PORTB,BRAKE_OUT);
+		led_off(LEFT_OUT);
+		led_off(RIGHT_OUT);
+		led_off(BACK_OUT);
+		led_on(BRAKE_OUT);
 	}
 	else 
 	{
-		led_off(LEDS_PORTC,LEFT_OUT);
-		led_off(LEDS_PORTC,RIGHT_OUT);
-		led_off(LEDS_PORTC,BACK_OUT);
-		led_off(LEDS_PORTB,BRAKE_OUT);
-		led_on(LEDS_PORTA,POWER_OFF);
+		led_off(LEFT_OUT) ;
+		led_off(RIGHT_OUT);
+		led_off(BACK_OUT) ;
+		led_off(BRAKE_OUT);
+		led_on (POWER_OFF);
 	}
 }

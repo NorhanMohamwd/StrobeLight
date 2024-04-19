@@ -7,41 +7,53 @@
 
 #include "Dio_interface.h"
 #include "Led.h"
+#include "StdTypes.h"
 
 
+/* Configurable to change ports and pins for the leds */
+led_Sruct led_arr[TOTAL_LEDS]={{DIO_PIN2,PA},      // pin led
+                               {DIO_PIN1,PA},     //power off               
+                               {DIO_PIN5,PB},    //brake out
+						       {DIO_PIN3,PC},   // left out	   
+						       {DIO_PIN2,PC},  //right out 	   
+						       {DIO_PIN1,PC} //back out 	   
+						      };
+void led_init(void)       
+{  
+	
+	 // initialize led pins direction as output 
+	for(uint8_t i=0;i<TOTAL_LEDS;i++)
+	   {
+		
+	     dio_initPin(led_arr[i].led_port,led_arr[i].Led_pin , OUTPUT);
+	   }
+	
+	/* to turn off all the leds at the beginning (active HIGH leds)  
+	   if the leds are active low write the voltage HIGH
+	 */
+		for(uint8_t i=0;i<TOTAL_LEDS;i++)
+		{
+			
+		  dio_writePin(led_arr[i].led_port,led_arr[i].Led_pin ,LOW);
+	    }   
 
-
-void led_init(void)
-{   // initialize led pins direction as output 
-	dio_initPin(PA,PIN_LED  , OUTPUT);
-	dio_initPin(PA,POWER_OFF, OUTPUT);
-	dio_initPin(PB,BRAKE_OUT, OUTPUT);
-	dio_initPin(PC,LEFT_OUT , OUTPUT);
-	dio_initPin(PC,RIGHT_OUT, OUTPUT);
-	dio_initPin(PC,BACK_OUT , OUTPUT);
-
-	// to turn off all the leds at the beginning (active low leds)     
-// 	dio_writePin(PC,LEFT_OUT  ,HIGH);
-// 	dio_writePin(PC,RIGHT_OUT ,HIGH);
-// 	dio_writePin(PCBACK_OUT  ,HIGH);
-// 	dio_writePin(PB,BRAKE_OUT ,HIGH);
-// 	dio_writePin(PA,PIN_LED   ,HIGH);
-// 	dio_writePin(PA,POWER_OFF ,HIGH);
 	
 									 
 }
 
-void led_on  (uint8_t port, led_t led )
-{
 
-	dio_writePin( port,led,LOW);
+/* this logic is for the active high leds 
+   if it's active low change the voltage in the 2 functions from LOW TO HIGH 
+*/
+
+void led_on  ( led_t led )
+{
+	dio_writePin(led_arr[led].led_port,led_arr[led].Led_pin ,HIGH);
 	
 }
 
 
-void led_off (uint8_t port, led_t led )
+void led_off ( led_t led )
 {
-
-	dio_writePin(port, led,HIGH);
-
+	dio_writePin(led_arr[led].led_port,led_arr[led].Led_pin ,LOW);
 }

@@ -19,7 +19,7 @@ void button_init(void){
 }
 
 union signalsUnion button_read(void){
-	dio_pinVoltage_t pinValue = dio_readPin(PA,LEFT_IN);
+	dio_pinVoltage_t pinValue = dio_readPin(PC,LEFT_IN);
 	uint8_t currentButtonRead= ((dio_readPort(PB) & 0x07) | (pinValue<<3) ); /*puts the four readings into one variable*/
 	static  uint8_t previousButtonStage = 0xFF;								/*initialize the previous state with HIGH*/
 	uint8_t diffButtonStage = currentButtonRead ^ previousButtonStage;		/*to process only the changed value and discard old ones*/
