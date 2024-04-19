@@ -13,35 +13,35 @@
 
 void led_init(void)
 {   // initialize led pins direction as output 
-	dio_initPin(PIN_LED  , OUTPUT);
-	dio_initPin(LEFT_OUT , OUTPUT);
-	dio_initPin(RIGHT_OUT, OUTPUT);
-	dio_initPin(BACK_OUT , OUTPUT);
-	dio_initPin(BRAKE_OUT, OUTPUT);
-	dio_initPin(POWER_OFF, OUTPUT);
+	dio_initPin(PA,PIN_LED  , OUTPUT);
+	dio_initPin(PA,POWER_OFF, OUTPUT);
+	dio_initPin(PB,BRAKE_OUT, OUTPUT);
+	dio_initPin(PC,LEFT_OUT , OUTPUT);
+	dio_initPin(PC,RIGHT_OUT, OUTPUT);
+	dio_initPin(PC,BACK_OUT , OUTPUT);
 
 	// to turn off all the leds at the beginning (active low leds)     
-	dio_writePin(LEFT_OUT  ,HIGH);
-	dio_writePin(RIGHT_OUT ,HIGH);
-	dio_writePin(BACK_OUT  ,HIGH);
-	dio_writePin(BRAKE_OUT ,HIGH);
-	dio_writePin(PIN_LED   ,HIGH);
-	dio_writePin(POWER_OFF ,HIGH);
+// 	dio_writePin(PC,LEFT_OUT  ,HIGH);
+// 	dio_writePin(PC,RIGHT_OUT ,HIGH);
+// 	dio_writePin(PCBACK_OUT  ,HIGH);
+// 	dio_writePin(PB,BRAKE_OUT ,HIGH);
+// 	dio_writePin(PA,PIN_LED   ,HIGH);
+// 	dio_writePin(PA,POWER_OFF ,HIGH);
 	
 									 
 }
 
-void led_on  ( led_t led )
+void led_on  (uint8_t port, led_t led )
 {
 
-	dio_writePin( led,LOW);
+	dio_writePin( port,led,LOW);
 	
 }
 
 
-void led_off ( led_t led )
+void led_off (uint8_t port, led_t led )
 {
 
-	dio_writePin( led,HIGH);
+	dio_writePin(port, led,HIGH);
 
 }

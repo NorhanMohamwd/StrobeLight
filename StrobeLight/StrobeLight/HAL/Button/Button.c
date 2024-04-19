@@ -12,14 +12,14 @@
 
 
 void button_init(void){
-	dio_initPin(LEFT_IN,INPULL);
-	dio_initPin(RIGHT_IN,INPULL);
-	dio_initPin(BACK_IN,INPULL);
-	dio_initPin(BRAKE_IN,INPULL);
+	dio_initPin(PC,LEFT_IN,INPULL);
+	dio_initPin(PB,RIGHT_IN,INPULL);
+	dio_initPin(PB,BACK_IN,INPULL);
+	dio_initPin(PB,BRAKE_IN,INPULL);
 }
 
 union signalsUnion button_read(void){
-	dio_pinVoltage_t pinValue = dio_readPin(PINC0);
+	dio_pinVoltage_t pinValue = dio_readPin(PA,LEFT_IN);
 	uint8_t currentButtonRead= ((dio_readPort(PB) & 0x07) | (pinValue<<3) ); /*puts the four readings into one variable*/
 	static  uint8_t previousButtonStage = 0xFF;								/*initialize the previous state with HIGH*/
 	uint8_t diffButtonStage = currentButtonRead ^ previousButtonStage;		/*to process only the changed value and discard old ones*/

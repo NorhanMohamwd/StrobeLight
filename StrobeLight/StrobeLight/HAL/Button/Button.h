@@ -30,10 +30,10 @@ union signalsUnion result;
  
 typedef enum
 {
-	LEFT_IN=PINC0,
-	RIGHT_IN=PINB0,
-	BACK_IN=PINB1,
-	BRAKE_IN=PINB2
+	LEFT_IN=DIO_PIN0,
+	RIGHT_IN=DIO_PIN0,
+	BACK_IN=DIO_PIN1,
+	BRAKE_IN=DIO_PIN2
  } button_t ;
 
 

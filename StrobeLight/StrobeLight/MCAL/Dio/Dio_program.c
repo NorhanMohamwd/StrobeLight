@@ -13,20 +13,18 @@
  /**To set the status of all pins at once (output, input, or pull-up). **/
 void dio_init(void)
 {
-	dio_pinNumber i;
-	for (i=PINA0; i<TOTAL_PINS; i++)
-	{
-		dio_initPin(i,PinsStatusArray[i]);
-	}
+// 	dio_pinNumber i;
+// 	for (i=0; i<TOTAL_PINS; i++)
+// 	{
+// 		dio_initPin(i,PinsStatusArray[i]);
+// 	}
 
 }
 
 /***To set the status of an individual pin at a time (output, input, or pull-up)***/
- void dio_initPin(dio_pinNumber pin,dio_pinStatus status)
+ void dio_initPin(dio_portNumber port,dio_pinNumber pin,dio_pinStatus status)
 {
 
-	dio_portNumber port=pin/8;
-	uint8_t pin_num=pin%8;
 
 	switch(status)
 	{
@@ -34,12 +32,13 @@ void dio_init(void)
 		switch(port)
 		{
 			case PA:
-			SET_BIT(PORTA_DIR,pin_num);            //PORT_Direction
+			SET_BIT(PORTA_DIR,pin);            //PORT_Direction
+			break;
 			case PB:
-			SET_BIT(PORTB_DIR,pin_num);
+			SET_BIT(PORTB_DIR,pin);
 			break;
 			case PC:
-			SET_BIT(PORTC_DIR,pin_num);
+			SET_BIT(PORTC_DIR,pin);
 			break;
 		}
 		break;
@@ -47,16 +46,16 @@ void dio_init(void)
 		switch(port)
 		{
 			case PA:
-			CLEAR_BIT(PORTA_DIR,pin_num);                            // SET Direction to input
-			CLEAR_BIT( _SFR_MEM8(0x0410+pin_num* 0x01),3);         // disable pull up
+			CLEAR_BIT(PORTA_DIR,pin);                            // SET Direction to input
+			CLEAR_BIT( _SFR_MEM8(0x0410+pin* 0x01),3);         // disable pull up
 			break;
 			case PB:
-			CLEAR_BIT(PORTB_DIR,pin_num);
-			CLEAR_BIT( _SFR_MEM8(0x0430+pin_num* 0x01),3);
+			CLEAR_BIT(PORTB_DIR,pin);
+			CLEAR_BIT( _SFR_MEM8(0x0430+pin* 0x01),3);
 			break;
 			case PC:
-			CLEAR_BIT(PORTC_DIR,pin_num);
-			CLEAR_BIT( _SFR_MEM8(0x0450+pin_num* 0x01),3);
+			CLEAR_BIT(PORTC_DIR,pin);
+			CLEAR_BIT( _SFR_MEM8(0x0450+pin* 0x01),3);
 			break;
 
 		}
@@ -66,16 +65,16 @@ void dio_init(void)
 		switch(port)
 		{
 			case PA:
-			CLEAR_BIT(PORTA_DIR,pin_num);                  // SET Direction to input
-			SET_BIT( _SFR_MEM8(0x0410+pin_num* 0x01),3);            // Enable pull up
+			CLEAR_BIT(PORTA_DIR,pin);                // SET Direction to input
+			SET_BIT( _SFR_MEM8(0x0410+pin* 0x01),3);            // Enable pull up
 			break;
 			case PB:
-			CLEAR_BIT(PORTB_DIR,pin_num);
-			SET_BIT( _SFR_MEM8(0x0430+pin_num* 0x01),3);
+			CLEAR_BIT(PORTB_DIR,pin);
+			SET_BIT( _SFR_MEM8(0x0430+pin* 0x01),3);
 			break;
 			case PC:
-			CLEAR_BIT(PORTC_DIR,pin_num);
-			SET_BIT( _SFR_MEM8(0x0450+pin_num* 0x01),3);
+			CLEAR_BIT(PORTC_DIR,pin);
+			SET_BIT( _SFR_MEM8(0x0450+pin* 0x01),3);
 			break;
 		}
 		break;
@@ -84,24 +83,23 @@ void dio_init(void)
 
 
 
-void dio_writePin(dio_pinNumber pin,dio_pinVoltage_t voltage )
+void dio_writePin(dio_portNumber port,dio_pinNumber pin,dio_pinVoltage_t voltage )
 {
 
 
-	dio_portNumber port=pin/8;
-	uint8_t pin_num=pin%8;
+
 	if (voltage == HIGH)
 	{
 		switch(port)
 		{
 			case PA:
-			SET_BIT(PORTA_OUT,pin_num);
+			SET_BIT(PORTA_OUT,pin);
 			break;
 			case PB:
-			SET_BIT(PORTB_OUT,pin_num);
+			SET_BIT(PORTB_OUT,pin);
 			break;
 			case PC:
-			SET_BIT(PORTC_OUT,pin_num);
+			SET_BIT(PORTC_OUT,pin);
 			break;
 		}
 	}
@@ -110,13 +108,13 @@ void dio_writePin(dio_pinNumber pin,dio_pinVoltage_t voltage )
 		switch(port)
 		{
 			case PA:
-			CLEAR_BIT(PORTA_OUT,pin_num);
+			CLEAR_BIT(PORTA_OUT,pin);
 			break;
 			case PB:
-			CLEAR_BIT(PORTB_OUT,pin_num);
+			CLEAR_BIT(PORTB_OUT,pin);
 			break;
 			case PC:
-			CLEAR_BIT(PORTC_OUT,pin_num);
+			CLEAR_BIT(PORTC_OUT,pin);
 			break;
 		}
 	}
@@ -124,43 +122,40 @@ void dio_writePin(dio_pinNumber pin,dio_pinVoltage_t voltage )
 }
 
 
-dio_pinVoltage_t dio_readPin(dio_pinNumber pin)
+dio_pinVoltage_t dio_readPin(dio_portNumber port,dio_pinNumber pin)
 {
 
-	dio_portNumber port=pin/8;
-	uint8_t pin_num=pin%8;
 	dio_pinVoltage_t volt=LOW;
 
 	switch(port)
 	{
 		case PA:
-		volt=GET_BIT(PORTA_IN,pin_num);
+		volt=GET_BIT(PORTA_IN,pin);
 		break;
 		case PB:
-		volt=GET_BIT(PORTB_IN,pin_num);
+		volt=GET_BIT(PORTB_IN,pin);
 		break;
 		case PC:
-		volt=BIT_IS_SET(PORTC_IN,pin_num);
+		volt=BIT_IS_SET(PORTC_IN,pin);
 		break;
 	}
 	return volt;
 }
 
-void dio_togglePin( dio_pinNumber pin)
+void dio_togglePin(dio_portNumber port, dio_pinNumber pin)
 {
 
-	dio_portNumber port=pin/8;
-	uint8_t pin_num =pin%8;
+
 	switch(port)
 	{
 		case PA:
-		TOGGLE_BIT(PORTA_OUT,pin_num);
+		TOGGLE_BIT(PORTA_OUT,pin);
 		break;
 		case PB:
-		TOGGLE_BIT(PORTB_OUT,pin_num);
+		TOGGLE_BIT(PORTB_OUT,pin);
 		break;
 		case PC:
-		TOGGLE_BIT(PORTC_OUT,pin_num);
+		TOGGLE_BIT(PORTC_OUT,pin);
 		break;
 		default:
 		break;
