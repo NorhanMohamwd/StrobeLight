@@ -37,8 +37,8 @@ typedef enum
 
 typedef enum
 {
-    LOW=0,
-    HIGH=1
+    LOW_=0,
+    HIGH_=1
 } dio_pinVoltage_t;
 
 

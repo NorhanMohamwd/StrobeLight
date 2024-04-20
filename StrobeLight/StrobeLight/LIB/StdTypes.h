@@ -9,6 +9,8 @@
 #ifndef STDTYPES_H_
 #define STDTYPES_H_
 
+#define LOW     0
+#define HIGH    1
 
 typedef unsigned char    uint8_t;
 typedef   signed char    sint8_t;

@@ -88,7 +88,7 @@ void dio_writePin(dio_portNumber port,dio_pinNumber pin,dio_pinVoltage_t voltage
 
 
 
-	if (voltage == HIGH)
+	if (voltage == HIGH_)
 	{
 		switch(port)
 		{
@@ -103,7 +103,7 @@ void dio_writePin(dio_portNumber port,dio_pinNumber pin,dio_pinVoltage_t voltage
 			break;
 		}
 	}
-	else if ( voltage==LOW)
+	else if ( voltage==LOW_)
 	{
 		switch(port)
 		{
@@ -125,7 +125,7 @@ void dio_writePin(dio_portNumber port,dio_pinNumber pin,dio_pinVoltage_t voltage
 dio_pinVoltage_t dio_readPin(dio_portNumber port,dio_pinNumber pin)
 {
 
-	dio_pinVoltage_t volt=LOW;
+	dio_pinVoltage_t volt=LOW_;
 
 	switch(port)
 	{
@@ -190,13 +190,13 @@ uint8_t  dio_readPort(dio_portNumber port)
 	switch(port)
 	{
 		case PA:
-		value=GET_REG(PORTA_OUT);
+		value=GET_REG(PORTA_IN);
 		break;
 		case PB:
-		value=GET_REG(PORTB_OUT);
+		value=GET_REG(PORTB_IN);
 		break;
 		case PC:
-		value=GET_REG(PORTC_OUT);
+		value=GET_REG(PORTC_IN);
 		break;
 		default:
 		break;

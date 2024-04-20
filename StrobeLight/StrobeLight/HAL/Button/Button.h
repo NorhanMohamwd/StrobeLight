@@ -12,6 +12,15 @@
 #include "StdTypes.h"
 #include "Dio_interface.h"
 
+
+
+#define LEFT_IN     0
+#define	RIGHT_IN    0
+#define BACK_IN     1
+#define BRAKE_IN    2
+
+
+
 union signalsUnion{
 	volatile struct  {
 		uint8_t  RIGHT     : 1;		/*PORT B PIN0*/
@@ -28,13 +37,14 @@ union signalsUnion result;
 
  /*** Typedefs ***/
  
+/*
 typedef enum
 {
 	LEFT_IN=DIO_PIN0,
 	RIGHT_IN=DIO_PIN0,
 	BACK_IN=DIO_PIN1,
 	BRAKE_IN=DIO_PIN2
- } button_t ;
+ } button_t ;*/
 
 
 /************* API ***********/
