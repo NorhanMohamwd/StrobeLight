@@ -12,15 +12,41 @@
 
  /**To set the status of all pins at once (output, input, or pull-up). **/
 void dio_init(void)
-{
-// 	dio_pinNumber i;
-// 	for (i=0; i<TOTAL_PINS; i++)
-// 	{
-// 		dio_initPin(i,PinsStatusArray[i]);
-// 	}
+{  
+	dio_pinNumber pin;
+    bool_t flag_firstIn_PB=FALSE;
+    bool_t flag_firstIn_PC=FALSE;
+    uint8_t i;
+	for ( i=0; i<TOTAL_PINS; i++)
+	{
+    if (i<8)
+           { // PortA pins
+		     dio_initPin(PA,pin,PinsStatusArray[i]);
+             pin++;
+           }
+    else if (i<14)  //PortB pins 
+           {
+            if(flag_firstIn_PB==FALSE )
+            {
+              pin =DIO_PIN0;
+              flag_firstIn_PB=TRUE;
+            }
+	        dio_initPin(PB, pin,PinsStatusArray[i]);
+            pin++;
+           }
+    else
+          {  //PORTC pins 
+          if(flag_firstIn_PC==FALSE )
+          {
+           pin =DIO_PIN0;
+           flag_firstIn_PC=TRUE;
+          }
+          dio_initPin(PC, pin,PinsStatusArray[i]);
+          pin++;
+          }
 
+   }
 }
-
 /***To set the status of an individual pin at a time (output, input, or pull-up)***/
  void dio_initPin(dio_portNumber port,dio_pinNumber pin,dio_pinStatus status)
 {

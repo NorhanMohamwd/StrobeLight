@@ -24,8 +24,6 @@ const dio_pinStatus PinsStatusArray[TOTAL_PINS]={
 	OUTPUT,		 /* Port B Pin 3 */
 	OUTPUT,		 /* Port B Pin 4 */
 	OUTPUT,		 /* Port B Pin 5 */
-	INPUT,		 /* Port B Pin 6 */
-	INPULL,		 /* Port B Pin 7 */
 	INPULL,		 /* Port C Pin 0 */
 	OUTPUT,		 /* Port C Pin 1 */
 	OUTPUT,		 /* Port C Pin 2 */
