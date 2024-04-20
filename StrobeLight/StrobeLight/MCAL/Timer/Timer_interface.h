@@ -12,7 +12,7 @@
 #include "Timer_config.h"
 
 extern uint32_t running;
-extern uint8_t overFlows;
+extern volatile uint8_t leds_overFlows;
 #define TIME_RUNNING	107784
  /*** Typedefs ***/
  
