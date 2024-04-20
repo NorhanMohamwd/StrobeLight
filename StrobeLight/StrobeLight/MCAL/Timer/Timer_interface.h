@@ -12,6 +12,7 @@
 #include "Timer_config.h"
 
 extern uint32_t running;
+extern uint8_t overFlows;
 #define TIME_RUNNING	107784
  /*** Typedefs ***/
  
@@ -70,8 +71,8 @@ void Timer_enable(Timer_timerType timerName);
 bool_t Timer_getFlag(void);
 /*sets the function that will run in the timer's ISR*/
 void TimerB_setCallBack(void (*a_ptr)(void));
-/*calls the function of resetting wdt*/
-void Timer_resetWDG(void);
+/*the function called in timer ISR*/
+void Timer_isrFunction(void);
 
 
 

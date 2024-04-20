@@ -9,7 +9,7 @@
 #ifndef APP_H_
 #define APP_H_
 
-
+#define secCounts 76
 /************* API ***********/
 
 /*starts all the system's modules*/

@@ -32,6 +32,7 @@ typedef struct
 void led_init(void);
 void led_on  (led_t led );
 void led_off (led_t led );
+void led_toggle ( led_t led );
 
 
 

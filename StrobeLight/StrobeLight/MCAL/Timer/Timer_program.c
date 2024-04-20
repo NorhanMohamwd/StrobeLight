@@ -11,6 +11,7 @@
 #include "StdMacros.h"
 #include "StdTypes.h"
 static void (*g_timerCallBackPtr)(void)=NULLPTR;
+uint8_t overFlows =0;
 uint8_t gl_prescaler;
 uint32_t running=0;
 void Timer_init(const Timer_configType * Config_ptr , uint32_t ms){
@@ -165,8 +166,8 @@ void TimerB_setCallBack(void (*a_ptr)(void)){
 	g_timerCallBackPtr=a_ptr;
 }
 
-void Timer_resetWDG(void){
-	static uint8_t overFlows =0;
+void Timer_isrFunction(void){
+	
 	if (running<TIME_RUNNING){
 	running++;
 	}

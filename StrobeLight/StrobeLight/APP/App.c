@@ -25,7 +25,7 @@ void app_init(void)
 	delay_init();				 /*initializes delay module*/
 	Timer_configType configTimerB = {TIMERB,PERIDIC_INTERRUPT,CLKDIV1,COUNTING_DOWN};		/*create a configuration struct for TIMERB*/
 	Timer_init(&configTimerB , 195);			/*initializes TIMERB*/
-	TimerB_setCallBack(Timer_resetWDG);			/*sets the timer callback*/
+	TimerB_setCallBack(Timer_isrFunction);			/*sets the timer callback*/
 	enableGlobalInterrupt();					/*enables global interrupt*/
 }
 
@@ -57,21 +57,25 @@ void app_runnable(void){
 	}
 	
 	/*checks which signal is on to turn on/off corresponding led*/
-	if (LEFT)						
-	{
-		led_on(LEFT_OUT);
-		led_off(RIGHT_OUT);
-		led_off(BACK_OUT);
-		led_off(BRAKE_OUT);
-	}
-	else if (RIGHT)
-	{
-		led_off(LEFT_OUT);
-		led_on(RIGHT_OUT);
-		led_off(BACK_OUT);
-		led_off(BRAKE_OUT);
-	}
-	else if (BACK)
+    if (overFlows == secCounts){
+        if (LEFT)						
+        {
+            led_toggle(LEFT_OUT);
+            led_off(RIGHT_OUT);
+            led_off(BACK_OUT);
+            led_off(BRAKE_OUT);
+        }
+        else if (RIGHT)
+        {
+            led_off(LEFT_OUT);
+            led_toggle(RIGHT_OUT);
+            led_off(BACK_OUT);
+            led_off(BRAKE_OUT);
+        }
+        overFlows = 0;
+    }
+    
+	if (BACK)
 	{
 		led_off(LEFT_OUT);
 		led_off(RIGHT_OUT);

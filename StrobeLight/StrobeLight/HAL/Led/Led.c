@@ -57,3 +57,8 @@ void led_off ( led_t led )
 {
 	dio_writePin(led_arr[led].led_port,led_arr[led].Led_pin ,LOW);
 }
+
+void led_toggle ( led_t led )
+{
+	dio_togglePin(led_arr[led].led_port,led_arr[led].Led_pin);
+}
