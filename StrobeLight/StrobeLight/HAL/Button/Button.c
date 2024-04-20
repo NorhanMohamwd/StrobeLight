@@ -30,22 +30,28 @@ union signalsUnion button_read(void){
 	
 	/*checks that it's a new value and that it's low*/
 	if ((current.signal.LEFT == LOW ) && (diff.signal.LEFT == HIGH ) ){	
-        delay_ms(10);
+        delay_ms(50);
         if (dio_readPin(2,LEFT_IN)==LOW){
-		result.signal.LEFT = HIGH;
+        	result.signal.LEFT = HIGH;
         }
 	}
 	else if ((current.signal.RIGHT == LOW ) && (diff.signal.RIGHT == HIGH )){
-        delay_ms(10);
+        delay_ms(50);
         if (dio_readPin(1,RIGHT_IN)==LOW){
-		result.signal.RIGHT = HIGH;
+        	result.signal.RIGHT = HIGH;
         }
 	}
 	else if ((current.signal.BACK == LOW ) && (diff.signal.BACK == HIGH )){
-		result.signal.BACK = HIGH;
+        delay_ms(50);
+        if (dio_readPin(1,BACK_IN)== LOW){
+            result.signal.BACK = HIGH;
+        }
 	}
 	else if ((current.signal.BRAKE == LOW ) && (diff.signal.BRAKE == HIGH )){
-		result.signal.BRAKE = HIGH;
+        delay_ms(50);
+        if (dio_readPin(1,BRAKE_IN)== LOW){
+      		result.signal.BRAKE = HIGH;
+        }
 	}
 			
 	previousButtonStage = currentButtonRead;									/*save the current value in the previous one*/

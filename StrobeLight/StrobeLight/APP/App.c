@@ -37,25 +37,21 @@ void app_runnable(void){
 	signalProcessing = button_read();		/*gets the processed values from button*/
 	if (signalProcessing.signal.LEFT == HIGH){		/*checks if the new value is LEFT*/
 		RIGHT = BACK = BRAKE = 0;
-		delay_ms(50);
 		LEFT = !LEFT;
 		signalProcessing.signal.LEFT = LOW;
 	}
 	else if (signalProcessing.signal.RIGHT == HIGH){
 		LEFT = BACK = BRAKE = 0;
-		delay_ms(50);
 		RIGHT = !RIGHT;
 		signalProcessing.signal.RIGHT = LOW;
 	}
 	else if (signalProcessing.signal.BACK == HIGH){
 		LEFT = RIGHT = BRAKE = 0;
-		delay_ms(50);
 		BACK = !BACK;
 		signalProcessing.signal.BACK = LOW;
 	}
 	else if (signalProcessing.signal.BRAKE == HIGH){
 		LEFT = RIGHT = BACK = 0;
-		delay_ms(50);
 		BRAKE = !BRAKE;
 		signalProcessing.signal.BRAKE = LOW;
 	}
@@ -64,9 +60,6 @@ void app_runnable(void){
 	if (LEFT)						
 	{
 		led_on(LEFT_OUT);
-        delay_ms(500);
-        led_off(LEFT_OUT);
-        delay_ms(500);
 		led_off(RIGHT_OUT);
 		led_off(BACK_OUT);
 		led_off(BRAKE_OUT);
@@ -75,9 +68,6 @@ void app_runnable(void){
 	{
 		led_off(LEFT_OUT);
 		led_on(RIGHT_OUT);
-        delay_ms(500);
-        led_off(RIGHT_OUT);
-        delay_ms(500);
 		led_off(BACK_OUT);
 		led_off(BRAKE_OUT);
 	}
