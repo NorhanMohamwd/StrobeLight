@@ -18,6 +18,8 @@ typedef enum
 	LEFT_OUT    ,
 	RIGHT_OUT   ,
 	BACK_OUT    ,
+    STROBE1_OUT ,
+	STROBE2_OUT ,    
 	TOTAL_LEDS       /*total number of leds */
 } led_t ;
 

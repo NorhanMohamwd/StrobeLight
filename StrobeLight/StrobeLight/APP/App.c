@@ -15,7 +15,7 @@
 #include "Wdt.h"
 
 
-uint8_t LEFT, RIGHT, BACK, BRAKE =LOW;
+uint8_t LEFT, RIGHT, BACK, BRAKE, STROBE_1 , STROBE_2 = LOW;
 
 void app_init(void)
 {   	
@@ -36,51 +36,70 @@ void app_runnable(void){
 	union signalsUnion signalProcessing;
 	signalProcessing = button_read();		/*gets the processed values from button*/
 	if (signalProcessing.signal.LEFT == HIGH){		/*checks if the new value is LEFT*/
-		RIGHT = BACK = BRAKE = 0;
+		RIGHT = BACK = BRAKE = STROBE_1 =  STROBE_2 = 0;
 		LEFT = !LEFT;
 		signalProcessing.signal.LEFT = LOW;
 	}
 	else if (signalProcessing.signal.RIGHT == HIGH){
-		LEFT = BACK = BRAKE = 0;
+		LEFT = BACK = BRAKE = STROBE_1 =  STROBE_2 = 0;
 		RIGHT = !RIGHT;
 		signalProcessing.signal.RIGHT = LOW;
 	}
 	else if (signalProcessing.signal.BACK == HIGH){
-		LEFT = RIGHT = BRAKE = 0;
+		LEFT = RIGHT = BRAKE = STROBE_1 =  STROBE_2 = 0;
 		BACK = !BACK;
 		signalProcessing.signal.BACK = LOW;
 	}
 	else if (signalProcessing.signal.BRAKE == HIGH){
-		LEFT = RIGHT = BACK = 0;
+		LEFT = RIGHT = BACK= STROBE_1=  STROBE_2 = 0;
 		BRAKE = !BRAKE;
 		signalProcessing.signal.BRAKE = LOW;
 	}
+    else if (signalProcessing.signal.BTN_1 == HIGH){
+		LEFT = RIGHT = BACK = BRAKE  = STROBE_2 = 0;
+		STROBE_1 = !STROBE_1;
+		signalProcessing.signal.BTN_1 = LOW;
+	}
+    else if (signalProcessing.signal.BTN_2 == HIGH){
+		LEFT = RIGHT = BACK = BRAKE = STROBE_1 = 0;
+		STROBE_2 = !STROBE_2;
+		signalProcessing.signal.BTN_2 = LOW;
+	}
 	
 	/*checks which signal is on to turn on/off corresponding led*/
-    if (overFlows == secCounts){
-        if (LEFT)						
-        {
+    
+    if (LEFT)						
+    {
+        if (leds_overFlows >= secCounts){   
             led_toggle(LEFT_OUT);
             led_off(RIGHT_OUT);
             led_off(BACK_OUT);
             led_off(BRAKE_OUT);
+            led_off(STROBE1_OUT);
+            led_off(STROBE2_OUT);
+            leds_overFlows = 0;
         }
-        else if (RIGHT)
-        {
+    }
+    else if (RIGHT)
+    {
+        if (leds_overFlows >= secCounts){  
             led_off(LEFT_OUT);
             led_toggle(RIGHT_OUT);
             led_off(BACK_OUT);
             led_off(BRAKE_OUT);
+            led_off(STROBE1_OUT);
+            led_off(STROBE2_OUT);
+            leds_overFlows = 0;
         }
-        overFlows = 0;
     }
-    
-	if (BACK)
+    else if (BACK)
 	{
 		led_off(LEFT_OUT);
 		led_off(RIGHT_OUT);
 		led_on(BACK_OUT);
 		led_off(BRAKE_OUT);
+        led_off(STROBE1_OUT);
+        led_off(STROBE2_OUT);
 	}
 	else if (BRAKE)
 	{
@@ -88,6 +107,26 @@ void app_runnable(void){
 		led_off(RIGHT_OUT);
 		led_off(BACK_OUT);
 		led_on(BRAKE_OUT);
+        led_off(STROBE1_OUT);
+        led_off(STROBE2_OUT);
+	}
+    else if (STROBE_1)
+	{
+		led_off(LEFT_OUT);
+		led_off(RIGHT_OUT);
+		led_off(BACK_OUT);
+		led_off(BRAKE_OUT);
+        led_on(STROBE1_OUT);
+        led_off(STROBE2_OUT);
+	}
+     else if (STROBE_2)
+	{
+		led_off(LEFT_OUT);
+		led_off(RIGHT_OUT);
+		led_off(BACK_OUT);
+		led_off(BRAKE_OUT);
+        led_off(STROBE1_OUT);
+        led_on(STROBE2_OUT);
 	}
 	else 
 	{
@@ -95,6 +134,9 @@ void app_runnable(void){
 		led_off(RIGHT_OUT);
 		led_off(BACK_OUT) ;
 		led_off(BRAKE_OUT);
+        led_off(STROBE1_OUT);
+        led_off(STROBE1_OUT);
 		led_on (POWER_OFF);
 	}
+    
 }

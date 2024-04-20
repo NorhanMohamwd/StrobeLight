@@ -16,7 +16,9 @@ led_Sruct led_arr[TOTAL_LEDS]={{DIO_PIN2,PA},      // pin led
                                {DIO_PIN5,PB},    //brake out
 						       {DIO_PIN3,PC},   // left out	   
 						       {DIO_PIN2,PC},  //right out 	   
-						       {DIO_PIN1,PC} //back out 	   
+						       {DIO_PIN1,PC}, //back out
+							   {DIO_PIN7,PA}, //STROBE1
+							   {DIO_PIN6,PA} //STROBE2
 						      };
 void led_init(void)       
 {  
@@ -36,7 +38,7 @@ void led_init(void)
 			
 		  dio_writePin(led_arr[i].led_port,led_arr[i].Led_pin ,LOW);
 	    }   
-
+   // dio_writePin(led_arr[0].led_port,led_arr[0].Led_pin ,HIGH);  // turn on the led pin as an indicator the power is on 
 	
 									 
 }
