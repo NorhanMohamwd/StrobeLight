@@ -51,3 +51,5 @@ StrobeLight/StrobeLight/Release/MCAL/Timer/Timer_program.d
 StrobeLight/StrobeLight/Release/MCAL/Timer/Timer_program.o
 StrobeLight/StrobeLight/Release/MCAL/Wdt/Wdt.d
 StrobeLight/StrobeLight/Release/MCAL/Wdt/Wdt.o
+
+StrobeLight/StrobeLight/TrailerVolt_mini.X/
