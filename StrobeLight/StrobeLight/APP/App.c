@@ -31,7 +31,13 @@ void app_init(void)
 
 void app_runnable(void){
     while (running==TIME_RUNNING){
-		while(1);
+		led_off(LEFT_OUT) ;
+		led_off(RIGHT_OUT);
+		led_off(BACK_OUT) ;
+		led_off(BRAKE_OUT);
+		led_off(STROBE1_OUT);
+		led_off(STROBE1_OUT);
+		led_on (POWER_OFF);
 	}
 	union signalsUnion signalProcessing;
 	signalProcessing = button_read();		/*gets the processed values from button*/

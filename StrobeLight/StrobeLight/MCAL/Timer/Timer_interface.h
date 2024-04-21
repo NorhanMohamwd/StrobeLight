@@ -13,7 +13,7 @@
 
 extern uint32_t running;
 extern volatile uint8_t leds_overFlows;
-#define TIME_RUNNING	107784
+#define TIME_RUNNING	9231
  /*** Typedefs ***/
  
 typedef enum{
