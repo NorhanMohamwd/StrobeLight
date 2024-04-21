@@ -11,9 +11,9 @@
 #include "StdTypes.h"
 #include "Timer_config.h"
 
-extern uint32_t running;
+
 extern volatile uint8_t leds_overFlows;
-#define TIME_RUNNING	9231
+
  /*** Typedefs ***/
  
 typedef enum{
