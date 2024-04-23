@@ -16,6 +16,7 @@ dio_pinInterrupt left_edge = FALLING;
 dio_pinInterrupt brake_edge = FALLING;
 
 union signalsUnion current;
+union signalsUnion diff;
 union signalsUnion result;
 
 
@@ -37,9 +38,12 @@ void button_init(void){
 }
 
 void button_detectPress(void){
-	uint8_t flags = (dio_readFlags(PB) & 0x1F ) | (dio_readFlags(PC)<<5) ;  
-	current.value = flags;
-	
+	uint8_t currentButtonRead = (dio_readFlags(PB) & 0x1F ) | (dio_readFlags(PC)<<5) ;  
+	current.value = currentButtonRead;
+	static  uint8_t previousButtonStage = 0x00;	
+	result.value = 0;
+	uint8_t diffButtonStage = currentButtonRead ^ previousButtonStage;
+	diff.value=diffButtonStage;
 	if (current.signal.LEFT == HIGH )
 	{	
 		dio_resetFlags(PC,LEFT_IN);
@@ -62,17 +66,19 @@ void button_detectPress(void){
 			}
 			dio_enableInterruptTrigger(PC,LEFT_IN,FALLING);
 			left_edge = FALLING;
+			if (diff.signal.BRAKE == HIGH){
 			result.signal.LEFT=HIGH;
+			}
 		}
 	}
-	else if (current.signal.RIGHT == HIGH )
+	else if ((current.signal.RIGHT == HIGH)  && (diff.signal.RIGHT == HIGH ) )
 	{
 		dio_resetFlags(PB,RIGHT_IN);
 		result.signal.RIGHT=HIGH;
 		result.signal.arrOfPresses[RIGHT_IN] += 1;
 		result.signal.AUTO_MODE = NO_AUTO_MODE;
 	}
-	else if (current.signal.BACK == HIGH )
+	else if ((current.signal.BACK == HIGH ) && (diff.signal.BACK == HIGH ))
 	{
 		dio_resetFlags(PB,BACK_IN);
 		result.signal.BACK=HIGH;
@@ -101,24 +107,27 @@ void button_detectPress(void){
 			}
 			dio_enableInterruptTrigger(PB,BRAKE_IN,FALLING);
 			brake_edge = FALLING;
+			if (diff.signal.BRAKE == HIGH){
 			result.signal.BRAKE=HIGH;
+			}
 		}
 	}
-	else if (current.signal.BTN_1 == HIGH )
+	else if ((current.signal.BTN_1 == HIGH )  && (diff.signal.BTN_1 == HIGH ))
 	{
 		dio_resetFlags(PB,BUTTON_1);
 		result.signal.BTN_1=HIGH;
 		result.signal.arrOfPresses[BUTTON_1] += 1;
 		result.signal.AUTO_MODE = NO_AUTO_MODE;
 	}
-	else if (current.signal.BTN_2 == HIGH )
+	else if ((current.signal.BTN_2 == HIGH ) && (diff.signal.BTN_2 == HIGH ))
 	{
 		dio_resetFlags(PB,BUTTON_2);
 		result.signal.BTN_2=HIGH;
 		result.signal.arrOfPresses[BUTTON_2] += 1;
 		result.signal.AUTO_MODE = NO_AUTO_MODE;
 	}
-			
+	
+	previousButtonStage = 	result.value;
 	result.signal.previous = result.value;									/*save the current value in the previous one*/
 	g_buttonCallBackPtr(result);
 }
