@@ -12,6 +12,7 @@
 #include "StdTypes.h"
 static void (*g_timerCallBackPtr)(void)=NULLPTR;
 volatile uint8_t leds_overFlows;
+volatile uint32_t button_overFlows;
 uint8_t gl_prescaler;
 
 void Timer_init(const Timer_configType * Config_ptr , uint32_t ms){
@@ -167,10 +168,11 @@ void TimerB_setCallBack(void (*a_ptr)(void)){
 }
 
 void Timer_isrFunction(void){
-	static uint8_t overFlows =0;
+	static uint8_t overFlows =0;					/*counter for wdt reset*/
 	
 	SET_BIT(TCB0_INTFLAGS,CAPT);					/*set the flag of compare*/
-    leds_overFlows++;
+    leds_overFlows++;								/*counter for leds flashing*/
+	button_overFlows++;								/*counter for button press*/
 	overFlows++;
 	if (overFlows==OVERFLOWS_NO)
 	{

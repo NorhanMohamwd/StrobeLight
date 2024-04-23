@@ -13,7 +13,7 @@
 
 #define CPU_FREQUENCY	3300000
 //#define REQUIRED_TICKS  55000
-#define OVERFLOWS_NO		15
+#define OVERFLOWS_NO		2
 
 #define SPLITM		    0
 #define DIR	            0

@@ -13,6 +13,7 @@
 
 
 extern volatile uint8_t leds_overFlows;
+extern volatile uint32_t button_overFlows;
 
  /*** Typedefs ***/
  
