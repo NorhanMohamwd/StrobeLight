@@ -16,6 +16,7 @@
 
 
 uint8_t LEFT, RIGHT, BACK, BRAKE, STROBE_1 , STROBE_2 = LOW;
+union signalsUnion buttonFlags;
 
 void app_init(void)
 {   	
@@ -24,44 +25,44 @@ void app_init(void)
 	led_init();					  /*initializes led module*/					         
 	delay_init();				 /*initializes delay module*/
 	Timer_configType configTimerB = {TIMERB,PERIDIC_INTERRUPT,CLKDIV1,COUNTING_DOWN};		/*create a configuration struct for TIMERB*/
-	Timer_init(&configTimerB , 195);			/*initializes TIMERB*/
+	Timer_init(&configTimerB , 200);			/*initializes TIMERB*/
 	TimerB_setCallBack(Timer_isrFunction);			/*sets the timer callback*/
+	dio_setCallBack(button_detectPress);
+	button_setCallBack(app_processSignals);
 	enableGlobalInterrupt();					/*enables global interrupt*/
 }
 
 void app_runnable(void){
-    
-	union signalsUnion signalProcessing;
-	signalProcessing = button_read();		/*gets the processed values from button*/
-	if (signalProcessing.signal.LEFT == HIGH){		/*checks if the new value is LEFT*/
+    /*checks if the new value is LEFT*/
+	if (buttonFlags.signal.LEFT == HIGH){		
 		RIGHT = BACK = BRAKE = STROBE_1 =  STROBE_2 = 0;
 		LEFT = !LEFT;
-		signalProcessing.signal.LEFT = LOW;
+		buttonFlags.signal.LEFT = LOW;
 	}
-	else if (signalProcessing.signal.RIGHT == HIGH){
+	else if (buttonFlags.signal.RIGHT == HIGH){
 		LEFT = BACK = BRAKE = STROBE_1 =  STROBE_2 = 0;
 		RIGHT = !RIGHT;
-		signalProcessing.signal.RIGHT = LOW;
+		buttonFlags.signal.RIGHT = LOW;
 	}
-	else if (signalProcessing.signal.BACK == HIGH){
+	else if (buttonFlags.signal.BACK == HIGH){
 		LEFT = RIGHT = BRAKE = STROBE_1 =  STROBE_2 = 0;
 		BACK = !BACK;
-		signalProcessing.signal.BACK = LOW;
+		buttonFlags.signal.BACK = LOW;
 	}
-	else if (signalProcessing.signal.BRAKE == HIGH){
+	else if (buttonFlags.signal.BRAKE == HIGH){
 		LEFT = RIGHT = BACK= STROBE_1=  STROBE_2 = 0;
 		BRAKE = !BRAKE;
-		signalProcessing.signal.BRAKE = LOW;
+		buttonFlags.signal.BRAKE = LOW;
 	}
-    else if (signalProcessing.signal.BTN_1 == HIGH){
+    else if (buttonFlags.signal.BTN_1 == HIGH){
 		LEFT = RIGHT = BACK = BRAKE  = STROBE_2 = 0;
 		STROBE_1 = !STROBE_1;
-		signalProcessing.signal.BTN_1 = LOW;
+		buttonFlags.signal.BTN_1 = LOW;
 	}
-    else if (signalProcessing.signal.BTN_2 == HIGH){
+    else if (buttonFlags.signal.BTN_2 == HIGH){
 		LEFT = RIGHT = BACK = BRAKE = STROBE_1 = 0;
 		STROBE_2 = !STROBE_2;
-		signalProcessing.signal.BTN_2 = LOW;
+		buttonFlags.signal.BTN_2 = LOW;
 	}
 	
 	/*checks which signal is on to turn on/off corresponding led*/
@@ -137,4 +138,10 @@ void app_runnable(void){
 		led_on (POWER_OFF);
 	}
     
+}
+
+void app_processSignals(union signalsUnion x){
+	
+	buttonFlags= x;
+	
 }

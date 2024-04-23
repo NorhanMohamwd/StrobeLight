@@ -9,6 +9,8 @@
 #ifndef APP_H_
 #define APP_H_
 
+#include "Button.h"
+
 #define secCounts 57
 /************* API ***********/
 
@@ -16,5 +18,7 @@
 void app_init(void);
 /*processes input signals and turns on/off corresponding leds*/
 void app_runnable(void);
+
+void app_processSignals(union signalsUnion x);
 
 #endif /* APP_H_ */
