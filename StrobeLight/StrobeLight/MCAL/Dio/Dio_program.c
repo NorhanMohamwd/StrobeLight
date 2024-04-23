@@ -5,10 +5,13 @@
  *  Author: Nada Salloum - https://github.com/nadasalloum
  */ 
 #include <avr/io.h>
+#include <avr/interrupt.h>
 #include "StdTypes.h"
 #include "StdMacros.h"
 #include "Dio_interface.h"
 #include "Dio_private.h"
+
+static void (*g_dioCallBackPtr)(void)=NULLPTR;
 
  /**To set the status of all pins at once (output, input, or pull-up). **/
 void dio_init(void)
@@ -48,7 +51,7 @@ void dio_init(void)
    }
 }
 /***To set the status of an individual pin at a time (output, input, or pull-up)***/
- void dio_initPin(dio_portNumber port,dio_pinNumber pin,dio_pinStatus status)
+ void dio_initPin(dio_portNumber port,dio_pinNumber pin,dio_pinStatus status  )
 {
 
 
@@ -104,6 +107,7 @@ void dio_init(void)
 			break;
 		}
 		break;
+			
 	}
 }
 
@@ -111,9 +115,6 @@ void dio_init(void)
 
 void dio_writePin(dio_portNumber port,dio_pinNumber pin,dio_pinVoltage_t voltage )
 {
-
-
-
 	if (voltage == HIGH_)
 	{
 		switch(port)
@@ -171,7 +172,6 @@ dio_pinVoltage_t dio_readPin(dio_portNumber port,dio_pinNumber pin)
 void dio_togglePin(dio_portNumber port, dio_pinNumber pin)
 {
 
-
 	switch(port)
 	{
 		case PA:
@@ -228,4 +228,76 @@ uint8_t  dio_readPort(dio_portNumber port)
 		break;
 	}
 	return value;
+}
+
+uint8_t  dio_readFlags(dio_portNumber port)
+{
+	uint8_t value=0;
+	switch(port)
+	{
+		case PA:
+		value=GET_REG(PORTA_INTFLAGS);
+		break;
+		case PB:
+		value=GET_REG(PORTB_INTFLAGS);
+		break;
+		case PC:
+		value=GET_REG(PORTC_INTFLAGS);
+		break;
+		default:
+		break;
+	}
+	return value;
+}
+
+void dio_resetFlags(dio_portNumber port,dio_pinNumber pin){
+	
+	switch(port)
+	{
+		case PA:
+		SET_BIT(PORTA_INTFLAGS,pin);
+		break;
+		case PB:
+		SET_BIT(PORTB_INTFLAGS,pin);
+		break;
+		case PC:
+		SET_BIT(PORTC_INTFLAGS,pin);
+		break;
+		default:
+		break;
+	}
+}
+void dio_enableInterruptTrigger(dio_portNumber port,dio_pinNumber pin , dio_pinInterrupt interrupt){
+	
+	switch(port)
+	{
+		case PA:
+		_SFR_MEM8(0x0410+pin* 0x01) |= interrupt ;            // Enable interrupt trigger
+		break;
+		case PB:
+		_SFR_MEM8(0x0430+pin* 0x01) |= interrupt ;
+		break;
+		case PC:
+		_SFR_MEM8(0x0450+pin* 0x01) |= interrupt ;
+		break;
+	}
+	
+}
+
+
+void dio_setCallBack(void (*a_ptr)(void)){
+	
+	g_dioCallBackPtr=a_ptr;
+}
+
+ISR(PORTB_PORT_vect){
+	if(g_dioCallBackPtr != NULLPTR){
+		g_dioCallBackPtr();
+	}
+}
+
+ISR(PORTC_PORT_vect){
+	if(g_dioCallBackPtr != NULLPTR){
+		g_dioCallBackPtr();
+	}
 }
