@@ -32,6 +32,17 @@ typedef enum
 
 typedef enum
 {
+	LEFT_IND=0,
+	RIGHT_IND,
+	BACK_IND,
+	BRAKE_IND,
+	BUTTON_1D,
+	BUTTON_2D
+	
+}button_index;
+
+typedef enum
+{
 	SHORT_PRESS,
 	LONG_PRESS
 	} button_pressTime;

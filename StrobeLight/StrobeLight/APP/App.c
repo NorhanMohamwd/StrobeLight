@@ -18,6 +18,7 @@
 uint8_t LEFT, RIGHT, BACK, BRAKE, STROBE_1 , STROBE_2 = LOW;
 union signalsUnion buttonFlags;
 Timer_counters updatedCounters;
+app_subMode subMode = LEFT_NOW;
 
 void app_init(void)
 {   	
@@ -34,117 +35,212 @@ void app_init(void)
 }
 
 void app_runnable(void){
-    /*checks if the new value is LEFT*/
-	if (buttonFlags.signal.LEFT == HIGH){		
-		RIGHT = BACK = BRAKE = STROBE_1 =  STROBE_2 = 0;
-		LEFT = !LEFT;
-		buttonFlags.signal.LEFT = LOW;
-	}
-	else if (buttonFlags.signal.RIGHT == HIGH){
-		LEFT = BACK = BRAKE = STROBE_1 =  STROBE_2 = 0;
-		RIGHT = !RIGHT;
-		buttonFlags.signal.RIGHT = LOW;
-	}
-	else if (buttonFlags.signal.BACK == HIGH){
-		LEFT = RIGHT = BRAKE = STROBE_1 =  STROBE_2 = 0;
-		BACK = !BACK;
-		buttonFlags.signal.BACK = LOW;
-	}
-	else if (buttonFlags.signal.BRAKE == HIGH){
-		LEFT = RIGHT = BACK= STROBE_1=  STROBE_2 = 0;
-		BRAKE = !BRAKE;
-		buttonFlags.signal.BRAKE = LOW;
-	}
-    else if (buttonFlags.signal.BTN_1 == HIGH){
-		LEFT = RIGHT = BACK = BRAKE  = STROBE_2 = 0;
-		STROBE_1 = !STROBE_1;
-		buttonFlags.signal.BTN_1 = LOW;
-	}
-    else if (buttonFlags.signal.BTN_2 == HIGH){
-		LEFT = RIGHT = BACK = BRAKE = STROBE_1 = 0;
-		STROBE_2 = !STROBE_2;
-		buttonFlags.signal.BTN_2 = LOW;
-	}
-	
-	/*checks which signal is on to turn on/off corresponding led*/
-    
-    if (LEFT)						
-    {
-		updatedCounters = timer_getCounter();
-        if (updatedCounters.leds >= secCounts){   
-            led_toggle(LEFT_OUT);
-            led_off(RIGHT_OUT);
-            led_off(BACK_OUT);
-            led_off(BRAKE_OUT);
-            led_off(STROBE1_OUT);
-            led_off(STROBE2_OUT);
-            timer_resetLedCounter();
-        }
-    }
-    else if (RIGHT)
-    {
-		updatedCounters = timer_getCounter();
-        if (updatedCounters.leds >= secCounts){  
-            led_off(LEFT_OUT);
-            led_toggle(RIGHT_OUT);
-            led_off(BACK_OUT);
-            led_off(BRAKE_OUT);
-            led_off(STROBE1_OUT);
-            led_off(STROBE2_OUT);
-            timer_resetLedCounter();
-        }
-    }
-    else if (BACK)
-	{
-		led_off(LEFT_OUT);
-		led_off(RIGHT_OUT);
-		led_on(BACK_OUT);
-		led_off(BRAKE_OUT);
-        led_off(STROBE1_OUT);
-        led_off(STROBE2_OUT);
-	}
-	else if (BRAKE)
-	{
-		led_off(LEFT_OUT);
-		led_off(RIGHT_OUT);
-		led_off(BACK_OUT);
-		led_on(BRAKE_OUT);
-        led_off(STROBE1_OUT);
-        led_off(STROBE2_OUT);
-	}
-    else if (STROBE_1)
-	{
-		led_off(LEFT_OUT);
-		led_off(RIGHT_OUT);
-		led_off(BACK_OUT);
-		led_off(BRAKE_OUT);
-        led_on(STROBE1_OUT);
-        led_off(STROBE2_OUT);
-	}
-     else if (STROBE_2)
-	{
-		led_off(LEFT_OUT);
-		led_off(RIGHT_OUT);
-		led_off(BACK_OUT);
-		led_off(BRAKE_OUT);
-        led_off(STROBE1_OUT);
-        led_on(STROBE2_OUT);
-	}
-	else 
-	{
-		led_off(LEFT_OUT) ;
-		led_off(RIGHT_OUT);
-		led_off(BACK_OUT) ;
-		led_off(BRAKE_OUT);
-        led_off(STROBE1_OUT);
-        led_off(STROBE1_OUT);
-		led_on (POWER_OFF);
-	}
-    
+   app_modeA();
+   while (buttonFlags.signal.AUTO_MODE == AUTO_MODE_){
+   app_modeC();
+   }
 }
+
+
+
+
+
+
 
 void app_processSignals(union signalsUnion x){
 	
 	buttonFlags= x;
 }
 
+void app_modeA(void){
+	
+	 /*checks if the new value is LEFT*/
+	 if (buttonFlags.signal.LEFT == HIGH){
+		 RIGHT = BACK = BRAKE = STROBE_1 =  STROBE_2 = 0;
+		 LEFT = !LEFT;
+		 buttonFlags.signal.LEFT = LOW;
+	 }
+	 else if (buttonFlags.signal.RIGHT == HIGH){
+		 LEFT = BACK = BRAKE = STROBE_1 =  STROBE_2 = 0;
+		 RIGHT = !RIGHT;
+		 buttonFlags.signal.RIGHT = LOW;
+	 }
+	 else if (buttonFlags.signal.BACK == HIGH){
+		 LEFT = RIGHT = BRAKE = STROBE_1 =  STROBE_2 = 0;
+		 BACK = !BACK;
+		 buttonFlags.signal.BACK = LOW;
+	 }
+	 else if (buttonFlags.signal.BRAKE == HIGH){
+		 LEFT = RIGHT = BACK= STROBE_1=  STROBE_2 = 0;
+		 BRAKE = !BRAKE;
+		 buttonFlags.signal.BRAKE = LOW;
+	 }
+	 else if (buttonFlags.signal.BTN_1 == HIGH){
+		 LEFT = RIGHT = BACK = BRAKE  = STROBE_2 = 0;
+		 STROBE_1 = !STROBE_1;
+		 buttonFlags.signal.BTN_1 = LOW;
+	 }
+	 else if (buttonFlags.signal.BTN_2 == HIGH){
+		 LEFT = RIGHT = BACK = BRAKE = STROBE_1 = 0;
+		 STROBE_2 = !STROBE_2;
+		 buttonFlags.signal.BTN_2 = LOW;
+	 }
+	 
+	 /*checks which signal is on to turn on/off corresponding led*/
+	 
+	 if (LEFT)
+	 {
+		 updatedCounters = timer_getCounter();
+		 if (updatedCounters.leds >= secCounts){
+			 led_toggle(LEFT_OUT);
+			 led_off(RIGHT_OUT);
+			 led_off(BACK_OUT);
+			 led_off(BRAKE_OUT);
+			 led_off(STROBE1_OUT);
+			 led_off(STROBE2_OUT);
+			 timer_resetLedCounter();
+		 }
+	 }
+	 else if (RIGHT)
+	 {
+		 updatedCounters = timer_getCounter();
+		 if (updatedCounters.leds >= secCounts){
+			 led_off(LEFT_OUT);
+			 led_toggle(RIGHT_OUT);
+			 led_off(BACK_OUT);
+			 led_off(BRAKE_OUT);
+			 led_off(STROBE1_OUT);
+			 led_off(STROBE2_OUT);
+			 timer_resetLedCounter();
+		 }
+	 }
+	 else if (BACK)
+	 {
+		 led_off(LEFT_OUT);
+		 led_off(RIGHT_OUT);
+		 led_on(BACK_OUT);
+		 led_off(BRAKE_OUT);
+		 led_off(STROBE1_OUT);
+		 led_off(STROBE2_OUT);
+	 }
+	 else if (BRAKE)
+	 {
+		 led_off(LEFT_OUT);
+		 led_off(RIGHT_OUT);
+		 led_off(BACK_OUT);
+		 led_on(BRAKE_OUT);
+		 led_off(STROBE1_OUT);
+		 led_off(STROBE2_OUT);
+	 }
+	 else if (STROBE_1)
+	 {
+		 led_off(LEFT_OUT);
+		 led_off(RIGHT_OUT);
+		 led_off(BACK_OUT);
+		 led_off(BRAKE_OUT);
+		 led_on(STROBE1_OUT);
+		 led_off(STROBE2_OUT);
+	 }
+	 else if (STROBE_2)
+	 {
+		 led_off(LEFT_OUT);
+		 led_off(RIGHT_OUT);
+		 led_off(BACK_OUT);
+		 led_off(BRAKE_OUT);
+		 led_off(STROBE1_OUT);
+		 led_on(STROBE2_OUT);
+	 }
+	 else
+	 {
+		 led_off(LEFT_OUT) ;
+		 led_off(RIGHT_OUT);
+		 led_off(BACK_OUT) ;
+		 led_off(BRAKE_OUT);
+		 led_off(STROBE1_OUT);
+		 led_off(STROBE1_OUT);
+		 led_on (POWER_OFF);
+	 }	
+}
+
+void app_modeC(void){
+
+	switch (subMode){
+		case LEFT_NOW:
+		{
+			//timer_resetLedCounter();  /*want it in the app runnable before i loop on modeC*/
+			updatedCounters= timer_getCounter();
+			while (updatedCounters.leds < FIVE_SEC_COUNT)
+			{
+				updatedCounters= timer_getCounter();
+				if (updatedCounters.leds % _500MS_COUNT == 0){
+					led_toggle(LEFT_OUT);
+					led_off(RIGHT_OUT);
+					led_off(BACK_OUT);
+					led_off(BRAKE_OUT);
+					led_off(STROBE1_OUT);
+					led_off(STROBE2_OUT);
+				}
+			}
+			timer_resetLedCounter();
+			subMode = RIGHT_NOW;
+			break;
+		}
+		case RIGHT_NOW:
+		{
+			updatedCounters= timer_getCounter();
+			while (updatedCounters.leds < FIVE_SEC_COUNT)
+			{
+				updatedCounters= timer_getCounter();
+				if (updatedCounters.leds % _500MS_COUNT == 0){
+					led_off(LEFT_OUT);
+					led_toggle(RIGHT_OUT);
+					led_off(BACK_OUT);
+					led_off(BRAKE_OUT);
+					led_off(STROBE1_OUT);
+					led_off(STROBE2_OUT);
+				}
+			}
+			timer_resetLedCounter();
+			subMode = BRAKE_NOW;
+			break;
+		}
+		case BRAKE_NOW:
+		{
+			updatedCounters= timer_getCounter();
+			while (updatedCounters.leds < FIVE_SEC_COUNT)
+			{
+				updatedCounters= timer_getCounter();
+				if (updatedCounters.leds % _500MS_COUNT == 0){
+					led_off(LEFT_OUT);
+					led_off(RIGHT_OUT);
+					led_off(BACK_OUT);
+					led_toggle(BRAKE_OUT);
+					led_off(STROBE1_OUT);
+					led_off(STROBE2_OUT);
+				}
+			}
+			timer_resetLedCounter();
+			subMode = BACK_NOW;
+			break;
+		}
+		case BACK_NOW:
+		{
+			updatedCounters= timer_getCounter();
+			while (updatedCounters.leds < FIVE_SEC_COUNT)
+			{
+				updatedCounters= timer_getCounter();
+				if (updatedCounters.leds % _500MS_COUNT == 0){
+					led_off(LEFT_OUT);
+					led_off(RIGHT_OUT);
+					led_toggle(BACK_OUT);
+					led_off(BRAKE_OUT);
+					led_off(STROBE1_OUT);
+					led_off(STROBE2_OUT);
+				}
+			}
+			timer_resetLedCounter();
+			subMode = LEFT_NOW;
+			break;
+		}
+	}
+}

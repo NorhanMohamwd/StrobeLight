@@ -59,7 +59,7 @@ void button_detectPress(void){
 			button_counter = timer_getCounter();
 			if (button_counter.buttons < FIVE_SEC_COUNT){
 				result.signal.LEFT_PRESSED=SHORT_PRESS;
-				result.signal.arrOfPresses[LEFT_IN] += 1;
+				result.signal.arrOfPresses[LEFT_IND] += 1;
 				result.signal.AUTO_MODE = NO_AUTO_MODE;
 			}
 			else {
@@ -77,14 +77,14 @@ void button_detectPress(void){
 	{
 		dio_resetFlags(PB,RIGHT_IN);
 		result.signal.RIGHT=HIGH;
-		result.signal.arrOfPresses[RIGHT_IN] += 1;
+		result.signal.arrOfPresses[RIGHT_IND] += 1;
 		result.signal.AUTO_MODE = NO_AUTO_MODE;
 	}
 	else if ((current.signal.BACK == HIGH ) && (diff.signal.BACK == HIGH ))
 	{
 		dio_resetFlags(PB,BACK_IN);
 		result.signal.BACK=HIGH;
-		result.signal.arrOfPresses[BACK_IN] += 1;
+		result.signal.arrOfPresses[BACK_IND] += 1;
 		result.signal.AUTO_MODE = NO_AUTO_MODE;
 	}
 	else if (current.signal.BRAKE == HIGH )
@@ -102,7 +102,7 @@ void button_detectPress(void){
 			button_counter = timer_getCounter();
 			if (button_counter.buttons < FIVE_SEC_COUNT){
 				result.signal.BRAKE_PRESSED=SHORT_PRESS;
-				result.signal.arrOfPresses[BRAKE_IN] += 1;
+				result.signal.arrOfPresses[BRAKE_IND] += 1;
 				result.signal.AUTO_MODE = NO_AUTO_MODE;
 			}
 			else {
@@ -120,14 +120,14 @@ void button_detectPress(void){
 	{
 		dio_resetFlags(PB,BUTTON_1);
 		result.signal.BTN_1=HIGH;
-		result.signal.arrOfPresses[BUTTON_1] += 1;
+		result.signal.arrOfPresses[BUTTON_1D] += 1;
 		result.signal.AUTO_MODE = NO_AUTO_MODE;
 	}
 	else if ((current.signal.BTN_2 == HIGH ) && (diff.signal.BTN_2 == HIGH ))
 	{
 		dio_resetFlags(PB,BUTTON_2);
 		result.signal.BTN_2=HIGH;
-		result.signal.arrOfPresses[BUTTON_2] += 1;
+		result.signal.arrOfPresses[BUTTON_2D] += 1;
 		result.signal.AUTO_MODE = NO_AUTO_MODE;
 	}
 	previousButtonStage = 	current.value;

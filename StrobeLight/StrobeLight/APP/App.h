@@ -12,6 +12,14 @@
 #include "Button.h"
 
 #define secCounts 75
+#define _500MS_COUNT 50
+
+typedef enum{
+	LEFT_NOW,
+	RIGHT_NOW,
+	BRAKE_NOW,
+	BACK_NOW
+	}app_subMode;
 /************* API ***********/
 
 /*starts all the system's modules*/
@@ -20,5 +28,11 @@ void app_init(void);
 void app_runnable(void);
 
 void app_processSignals(union signalsUnion x);
+
+void app_modeA(void);
+
+void app_modeB(void);
+
+void app_modeC(void);
 
 #endif /* APP_H_ */
