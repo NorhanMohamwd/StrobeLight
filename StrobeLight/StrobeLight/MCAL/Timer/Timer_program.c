@@ -11,8 +11,10 @@
 #include "StdMacros.h"
 #include "StdTypes.h"
 static void (*g_timerCallBackPtr)(void)=NULLPTR;
-volatile uint8_t leds_overFlows;
-volatile uint32_t button_overFlows;
+//static void (*g_counterCallBackPtr)(void)=NULLPTR;
+Timer_counters counters;
+//volatile uint8_t leds_overFlows;
+//volatile uint32_t button_overFlows;
 uint8_t gl_prescaler;
 
 void Timer_init(const Timer_configType * Config_ptr , uint32_t ms){
@@ -167,12 +169,13 @@ void TimerB_setCallBack(void (*a_ptr)(void)){
 	g_timerCallBackPtr=a_ptr;
 }
 
+
 void Timer_isrFunction(void){
 	static uint8_t overFlows =0;					/*counter for wdt reset*/
 	
 	SET_BIT(TCB0_INTFLAGS,CAPT);					/*set the flag of compare*/
-    leds_overFlows++;								/*counter for leds flashing*/
-	button_overFlows++;								/*counter for button press*/
+    counters.leds++;								/*counter for leds flashing*/
+	counters.buttons++;								/*counter for button press*/
 	overFlows++;
 	if (overFlows==OVERFLOWS_NO)
 	{
@@ -180,6 +183,18 @@ void Timer_isrFunction(void){
 		wdt_reset();
 
 	}
+}
+
+Timer_counters timer_getCounter(void){
+	return counters;
+}
+
+void timer_resetLedCounter(void){
+	counters.leds=0;
+}
+
+void timer_resetButtonCounter(void){
+	counters.buttons=0;
 }
 
 ISR(TCB0_INT_vect){

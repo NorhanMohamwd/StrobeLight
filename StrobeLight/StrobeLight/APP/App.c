@@ -17,6 +17,7 @@
 
 uint8_t LEFT, RIGHT, BACK, BRAKE, STROBE_1 , STROBE_2 = LOW;
 union signalsUnion buttonFlags;
+Timer_counters updatedCounters;
 
 void app_init(void)
 {   	
@@ -69,26 +70,28 @@ void app_runnable(void){
     
     if (LEFT)						
     {
-        if (leds_overFlows >= secCounts){   
+		updatedCounters = timer_getCounter();
+        if (updatedCounters.leds >= secCounts){   
             led_toggle(LEFT_OUT);
             led_off(RIGHT_OUT);
             led_off(BACK_OUT);
             led_off(BRAKE_OUT);
             led_off(STROBE1_OUT);
             led_off(STROBE2_OUT);
-            leds_overFlows = 0;
+            timer_resetLedCounter();
         }
     }
     else if (RIGHT)
     {
-        if (leds_overFlows >= secCounts){  
+		updatedCounters = timer_getCounter();
+        if (updatedCounters.leds >= secCounts){  
             led_off(LEFT_OUT);
             led_toggle(RIGHT_OUT);
             led_off(BACK_OUT);
             led_off(BRAKE_OUT);
             led_off(STROBE1_OUT);
             led_off(STROBE2_OUT);
-            leds_overFlows = 0;
+            timer_resetLedCounter();
         }
     }
     else if (BACK)
@@ -143,5 +146,5 @@ void app_runnable(void){
 void app_processSignals(union signalsUnion x){
 	
 	buttonFlags= x;
-	
 }
+

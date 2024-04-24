@@ -19,7 +19,7 @@ union signalsUnion current;
 union signalsUnion diff;
 union signalsUnion result;
 
-
+ Timer_counters button_counter;
 
 void button_init(void){
 	dio_initPin(PC,LEFT_IN,INPULL);
@@ -49,14 +49,15 @@ void button_detectPress(void){
 		dio_resetFlags(PC,LEFT_IN);
 		if (left_edge == FALLING)
 		{
-			button_overFlows=0;
+			timer_resetButtonCounter();
 			dio_enableInterruptTrigger(PC,LEFT_IN,RISING);
 			left_edge = RISING;
 			current.signal.LEFT=LOW;
 		}
 		else if (left_edge== RISING)
 		{
-			if (button_overFlows < FIVE_SEC_COUNT){
+			button_counter = timer_getCounter();
+			if (button_counter.buttons < FIVE_SEC_COUNT){
 				result.signal.LEFT_PRESSED=SHORT_PRESS;
 				result.signal.arrOfPresses[LEFT_IN] += 1;
 				result.signal.AUTO_MODE = NO_AUTO_MODE;
@@ -91,14 +92,15 @@ void button_detectPress(void){
 		dio_resetFlags(PB,BRAKE_IN);
 		if (brake_edge == FALLING)
 		{
-			button_overFlows=0;
+			timer_resetButtonCounter();
 			dio_enableInterruptTrigger(PB,BRAKE_IN,RISING);
 			brake_edge = RISING;
 			current.signal.BRAKE=LOW;
 		}
 		else if (brake_edge== RISING)
 		{
-			if (button_overFlows < FIVE_SEC_COUNT){
+			button_counter = timer_getCounter();
+			if (button_counter.buttons < FIVE_SEC_COUNT){
 				result.signal.BRAKE_PRESSED=SHORT_PRESS;
 				result.signal.arrOfPresses[BRAKE_IN] += 1;
 				result.signal.AUTO_MODE = NO_AUTO_MODE;

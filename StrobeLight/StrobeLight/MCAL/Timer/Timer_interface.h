@@ -12,10 +12,14 @@
 #include "Timer_config.h"
 
 
-extern volatile uint8_t leds_overFlows;
-extern volatile uint32_t button_overFlows;
+//extern volatile uint8_t leds_overFlows;
+//extern volatile uint32_t button_overFlows;
 
  /*** Typedefs ***/
+ typedef struct {
+	uint8_t leds;
+	uint8_t buttons;
+ }Timer_counters;
  
 typedef enum{
 	TIMERA,
@@ -75,6 +79,11 @@ void TimerB_setCallBack(void (*a_ptr)(void));
 /*the function called in timer ISR*/
 void Timer_isrFunction(void);
 
+void timer_resetLedCounter(void);
+
+void timer_resetButtonCounter(void);
+
+Timer_counters timer_getCounter(void);
 
 
 #endif /* TIMER_INTERFACE_H_ */
