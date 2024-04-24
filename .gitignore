@@ -53,3 +53,10 @@ StrobeLight/StrobeLight/Release/MCAL/Wdt/Wdt.d
 StrobeLight/StrobeLight/Release/MCAL/Wdt/Wdt.o
 
 StrobeLight/StrobeLight/TrailerVolt_mini.X/
+StrobeLight/StrobeLight/Debug/MCAL/EEPROM/Eeprom.d
+StrobeLight/StrobeLight/Debug/MCAL/EEPROM/Eeprom.o
+StrobeLight/StrobeLight/HAL/Button/.idea/vcs.xml
+StrobeLight/StrobeLight/HAL/Button/.idea/workspace.xml
+StrobeLight/StrobeLight/HAL/Led/.idea/workspace.xml
+StrobeLight/StrobeLight/HAL/Led/.idea/workspace.xml
+StrobeLight/StrobeLight/HAL/Led/.idea/workspace.xml
