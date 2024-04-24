@@ -40,7 +40,7 @@ void button_init(void){
 void button_detectPress(void){
 	uint8_t currentButtonRead = (dio_readFlags(PB) & 0x1F ) | (dio_readFlags(PC)<<5) ;  
 	current.value = currentButtonRead;
-	static  uint8_t previousButtonStage = 0x00;	
+	static  uint8_t previousButtonStage = 0x00;	 
 	result.value = 0;
 	uint8_t diffButtonStage = currentButtonRead ^ previousButtonStage;
 	diff.value=diffButtonStage;
@@ -66,9 +66,9 @@ void button_detectPress(void){
 			}
 			dio_enableInterruptTrigger(PC,LEFT_IN,FALLING);
 			left_edge = FALLING;
-			if (diff.signal.BRAKE == HIGH){
+			
 			result.signal.LEFT=HIGH;
-			}
+			
 		}
 	}
 	else if ((current.signal.RIGHT == HIGH)  && (diff.signal.RIGHT == HIGH ) )
@@ -107,9 +107,9 @@ void button_detectPress(void){
 			}
 			dio_enableInterruptTrigger(PB,BRAKE_IN,FALLING);
 			brake_edge = FALLING;
-			if (diff.signal.BRAKE == HIGH){
+			
 			result.signal.BRAKE=HIGH;
-			}
+			
 		}
 	}
 	else if ((current.signal.BTN_1 == HIGH )  && (diff.signal.BTN_1 == HIGH ))
