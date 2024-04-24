@@ -52,6 +52,7 @@ void button_detectPress(void){
 			button_overFlows=0;
 			dio_enableInterruptTrigger(PC,LEFT_IN,RISING);
 			left_edge = RISING;
+			current.signal.LEFT=LOW;
 		}
 		else if (left_edge== RISING)
 		{
@@ -66,7 +67,7 @@ void button_detectPress(void){
 			}
 			dio_enableInterruptTrigger(PC,LEFT_IN,FALLING);
 			left_edge = FALLING;
-			
+			current.signal.LEFT=HIGH;
 			result.signal.LEFT=HIGH;
 			
 		}
@@ -93,6 +94,7 @@ void button_detectPress(void){
 			button_overFlows=0;
 			dio_enableInterruptTrigger(PB,BRAKE_IN,RISING);
 			brake_edge = RISING;
+			current.signal.BRAKE=LOW;
 		}
 		else if (brake_edge== RISING)
 		{
@@ -107,7 +109,7 @@ void button_detectPress(void){
 			}
 			dio_enableInterruptTrigger(PB,BRAKE_IN,FALLING);
 			brake_edge = FALLING;
-			
+			current.signal.BRAKE=HIGH;
 			result.signal.BRAKE=HIGH;
 			
 		}
@@ -126,9 +128,8 @@ void button_detectPress(void){
 		result.signal.arrOfPresses[BUTTON_2] += 1;
 		result.signal.AUTO_MODE = NO_AUTO_MODE;
 	}
-	
-	previousButtonStage = 	result.value;
-	result.signal.previous = result.value;									/*save the current value in the previous one*/
+	previousButtonStage = 	current.value;
+	result.signal.previous = current.value;									/*save the current value in the previous one*/
 	g_buttonCallBackPtr(result);
 }
 

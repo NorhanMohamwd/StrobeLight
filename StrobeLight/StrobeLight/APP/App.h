@@ -11,7 +11,7 @@
 
 #include "Button.h"
 
-#define secCounts 57
+#define secCounts 75
 /************* API ***********/
 
 /*starts all the system's modules*/

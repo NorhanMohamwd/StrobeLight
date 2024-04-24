@@ -12,7 +12,7 @@
 #include "StdTypes.h"
 #include "Dio_interface.h"
 
-#define FIVE_SEC_COUNT		50
+#define FIVE_SEC_COUNT		500
 
 
 
