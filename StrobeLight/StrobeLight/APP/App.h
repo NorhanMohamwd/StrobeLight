@@ -13,13 +13,16 @@
 
 #define secCounts 75
 #define _500MS_COUNT 50
-
+#define BRAKE_MASK   0X04
 typedef enum{
 	LEFT_NOW,
 	RIGHT_NOW,
 	BRAKE_NOW,
 	BACK_NOW
 	}app_subMode;
+	
+// Enum for 3 modes 	
+
 /************* API ***********/
 
 /*starts all the system's modules*/
