@@ -38,7 +38,8 @@ void button_init(void){
 }
 
 void button_detectPress(void){
-	uint8_t currentButtonRead = (dio_readFlags(PB) & 0x1F ) | (dio_readFlags(PC)<<5) ;  
+	uint8_t currentButtonRead = (dio_readFlags(PB) & 0x1F ) | (dio_readFlags(PC)<<5) ; 
+	current.signal.previous= current.value;   // update the previous value before writing the new one 
 	current.value = currentButtonRead;
 	static  uint8_t previousButtonStage = 0x00;	 
 	result.value = 0;
