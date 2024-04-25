@@ -13,11 +13,13 @@
 #include "Timer_interface.h"
 #include "Interrupt.h"
 #include "Wdt.h"
+#include "Eeprom.h"
 
 uint8_t LEFT, RIGHT, BACK, BRAKE, STROBE_1 , STROBE_2 = LOW;
 union signalsUnion buttonFlags;
 Timer_counters updatedCounters;
 app_subMode subMode = LEFT_NOW;
+app_sysMode sysMode = MODE_A;
 void app_init(void)
 {   	
 	wdt_init();	                    /*initializes the watchdog timer module*/
@@ -29,27 +31,71 @@ void app_init(void)
 	TimerB_setCallBack(Timer_isrFunction);			/*sets the timer callback*/
 	dio_setCallBack(button_detectPress);
 	button_setCallBack(app_processSignals);
-	
-	//write eeprom as inital value ModeA
-
-	
 	enableGlobalInterrupt();					/*enables global interrupt*/
 }
 
 void app_runnable(void){
 	
 	//eeprom_read 
+	static uint8_t first_enterA=0;
+	static uint8_t first_enterB=0;
+	static uint8_t first_enterC=0;
+	readModeFromEeprom(&sysMode);
 	// Change them to mode state and check for it's variable 
 	// switch_case for modes 
-   app_modeA();
-    while (buttonFlags.signal.BRAKE_PRESSED == LONG_PRESS)
+	if (buttonFlags.signal.BRAKE_PRESSED == LONG_PRESS){
+		if (sysMode==MODE_A){
+			sysMode=MODE_B;
+			if(first_enterA==0){
+				//write eeprom
+				first_enterA=1;
+				first_enterB=0;
+				first_enterC=0;
+				writeModeToEeprom(sysMode);
+			}
+		}
+		else if (sysMode==MODE_B){
+			sysMode=MODE_A;
+				if(first_enterB==0){
+					//write eeprom
+					first_enterA=0;
+					first_enterB=1;
+					first_enterC=0;
+				writeModeToEeprom(sysMode);
+				}
+		}
+	}
+	else if (buttonFlags.signal.LEFT_PRESSED == LONG_PRESS){
+		sysMode=MODE_C;
+			if(first_enterC==0){
+				//write eeprom
+				first_enterA=0;
+				first_enterB=0;
+				first_enterC=1;
+			writeModeToEeprom(sysMode);
+			}
+	}
+	switch(sysMode)
 	{
-	    app_modeB();
-    }
-   while (buttonFlags.signal.AUTO_MODE == AUTO_MODE_)
-   {
-   app_modeC();
-   }
+		case MODE_A:
+		{
+			app_modeA();
+			break;
+		}
+		case MODE_B:
+		{
+			app_modeB();
+			break;
+		}
+		case MODE_C:
+		{
+			app_modeC();
+			break;
+		}
+		default:
+		break;
+	}
+	
    
 }
 

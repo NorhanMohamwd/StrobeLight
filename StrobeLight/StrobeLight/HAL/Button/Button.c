@@ -39,7 +39,7 @@ void button_init(void){
 
 void button_detectPress(void){
 	uint8_t currentButtonRead = (dio_readFlags(PB) & 0x1F ) | (dio_readFlags(PC)<<5) ; 
-	current.signal.previous= current.value;   // update the previous value before writing the new one 
+	result.signal.previous= current.value;   // update the previous value before writing the new one 
 	current.value = currentButtonRead;
 	static  uint8_t previousButtonStage = 0x00;	 
 	result.value = 0;
@@ -62,10 +62,12 @@ void button_detectPress(void){
 				result.signal.LEFT_PRESSED=SHORT_PRESS;
 				result.signal.arrOfPresses[LEFT_IND] += 1;
 				result.signal.AUTO_MODE = NO_AUTO_MODE;
+				result.signal.BRAKE_PRESSED=SHORT_PRESS;
 			}
 			else {
 				result.signal.LEFT_PRESSED=LONG_PRESS;
 				result.signal.AUTO_MODE = AUTO_MODE_;
+				result.signal.BRAKE_PRESSED=SHORT_PRESS;
 			}
 			dio_enableInterruptTrigger(PC,LEFT_IN,FALLING);
 			left_edge = FALLING;
@@ -81,6 +83,7 @@ void button_detectPress(void){
 		result.signal.arrOfPresses[RIGHT_IND] += 1;
 		result.signal.AUTO_MODE = NO_AUTO_MODE;
 		result.signal.LEFT_PRESSED=SHORT_PRESS;
+		result.signal.BRAKE_PRESSED=SHORT_PRESS;
 	}
 	else if ((current.signal.BACK == HIGH ) && (diff.signal.BACK == HIGH ))
 	{
@@ -89,6 +92,7 @@ void button_detectPress(void){
 		result.signal.arrOfPresses[BACK_IND] += 1;
 		result.signal.AUTO_MODE = NO_AUTO_MODE;
 		result.signal.LEFT_PRESSED=SHORT_PRESS;
+		result.signal.BRAKE_PRESSED=SHORT_PRESS;
 	}
 	else if (current.signal.BRAKE == HIGH )
 	{
@@ -128,6 +132,7 @@ void button_detectPress(void){
 		result.signal.arrOfPresses[BUTTON_1D] += 1;
 		result.signal.AUTO_MODE = NO_AUTO_MODE;
 		result.signal.LEFT_PRESSED=SHORT_PRESS;
+		result.signal.BRAKE_PRESSED=SHORT_PRESS;
 	}
 	else if ((current.signal.BTN_2 == HIGH ) && (diff.signal.BTN_2 == HIGH ))
 	{
@@ -136,9 +141,9 @@ void button_detectPress(void){
 		result.signal.arrOfPresses[BUTTON_2D] += 1;
 		result.signal.AUTO_MODE = NO_AUTO_MODE;
 		result.signal.LEFT_PRESSED=SHORT_PRESS;
+		result.signal.BRAKE_PRESSED=SHORT_PRESS;
 	}
 	previousButtonStage = 	current.value;
-	result.signal.previous = current.value;									/*save the current value in the previous one*/
 	g_buttonCallBackPtr(result);
 }
 

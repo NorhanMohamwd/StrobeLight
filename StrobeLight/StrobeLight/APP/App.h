@@ -21,7 +21,13 @@ typedef enum{
 	BACK_NOW
 	}app_subMode;
 	
-// Enum for 3 modes 	
+typedef enum{
+	MODE_A,
+	MODE_B,
+	MODE_C
+}app_sysMode;
+	
+	
 
 /************* API ***********/
 

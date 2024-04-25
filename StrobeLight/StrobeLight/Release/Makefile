@@ -42,6 +42,7 @@ SUBDIRS :=  \
 ../APP \
 ../MCAL/Dio \
 ../MCAL/Interrupt \
+../MCAL/EEPROM \
 ../MCAL/Wdt \
 ../MCAL/Timer
 
@@ -55,6 +56,7 @@ C_SRCS +=  \
 ../main.c \
 ../MCAL/Dio/Dio_config.c \
 ../MCAL/Dio/Dio_program.c \
+../MCAL/EEPROM/Eeprom.c \
 ../MCAL/Interrupt/Interrupt.c \
 ../MCAL/Timer/Timer_program.c \
 ../MCAL/Wdt/Wdt.c
@@ -74,6 +76,7 @@ HAL/Led/Led.o \
 main.o \
 MCAL/Dio/Dio_config.o \
 MCAL/Dio/Dio_program.o \
+MCAL/EEPROM/Eeprom.o \
 MCAL/Interrupt/Interrupt.o \
 MCAL/Timer/Timer_program.o \
 MCAL/Wdt/Wdt.o
@@ -86,6 +89,7 @@ HAL/Led/Led.o \
 main.o \
 MCAL/Dio/Dio_config.o \
 MCAL/Dio/Dio_program.o \
+MCAL/EEPROM/Eeprom.o \
 MCAL/Interrupt/Interrupt.o \
 MCAL/Timer/Timer_program.o \
 MCAL/Wdt/Wdt.o
@@ -98,6 +102,7 @@ HAL/Led/Led.d \
 main.d \
 MCAL/Dio/Dio_config.d \
 MCAL/Dio/Dio_program.d \
+MCAL/EEPROM/Eeprom.d \
 MCAL/Interrupt/Interrupt.d \
 MCAL/Timer/Timer_program.d \
 MCAL/Wdt/Wdt.d
@@ -110,6 +115,7 @@ HAL/Led/Led.d \
 main.d \
 MCAL/Dio/Dio_config.d \
 MCAL/Dio/Dio_program.d \
+MCAL/EEPROM/Eeprom.d \
 MCAL/Interrupt/Interrupt.d \
 MCAL/Timer/Timer_program.d \
 MCAL/Wdt/Wdt.d
@@ -131,70 +137,77 @@ LINKER_SCRIPT_DEP+=
 APP/App.o: ../APP/App.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt" -I"../MCAL/EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 HAL/Button/Button.o: ../HAL/Button/Button.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt" -I"../MCAL/EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 HAL/Delay/Delay.o: ../HAL/Delay/Delay.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt" -I"../MCAL/EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 HAL/Led/Led.o: ../HAL/Led/Led.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt" -I"../MCAL/EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 ./main.o: .././main.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt" -I"../MCAL/EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 MCAL/Dio/Dio_config.o: ../MCAL/Dio/Dio_config.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt" -I"../MCAL/EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 MCAL/Dio/Dio_program.o: ../MCAL/Dio/Dio_program.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt" -I"../MCAL/EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+MCAL/EEPROM/Eeprom.o: ../MCAL/EEPROM/Eeprom.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt" -I"../MCAL/EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 MCAL/Interrupt/Interrupt.o: ../MCAL/Interrupt/Interrupt.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt" -I"../MCAL/EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 MCAL/Timer/Timer_program.o: ../MCAL/Timer/Timer_program.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt" -I"../MCAL/EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 MCAL/Wdt/Wdt.o: ../MCAL/Wdt/Wdt.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\include" -I"../APP" -I"../HAL" -I"../HAL/Button" -I"../HAL/Led" -I"../LIB" -I"../MCAL" -I"../MCAL/Dio" -I"../MCAL/Timer" -I"../HAL/Delay" -I"../MCAL/Interrupt" -I"../MCAL/Wdt" -I"../MCAL/EEPROM"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1616 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.10.348\gcc\dev\attiny1616" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 

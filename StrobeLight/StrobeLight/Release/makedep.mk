@@ -16,6 +16,8 @@ MCAL\Dio\Dio_config.c
 
 MCAL\Dio\Dio_program.c
 
+MCAL\EEPROM\Eeprom.c
+
 MCAL\Interrupt\Interrupt.c
 
 MCAL\Timer\Timer_program.c
