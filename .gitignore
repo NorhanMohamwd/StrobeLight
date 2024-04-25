@@ -60,3 +60,5 @@ StrobeLight/StrobeLight/HAL/Button/.idea/workspace.xml
 StrobeLight/StrobeLight/HAL/Led/.idea/workspace.xml
 StrobeLight/StrobeLight/HAL/Led/.idea/workspace.xml
 StrobeLight/StrobeLight/HAL/Led/.idea/workspace.xml
+StrobeLight/StrobeLight/Release/MCAL/EEPROM/Eeprom.o
+StrobeLight/StrobeLight/Release/MCAL/EEPROM/Eeprom.d
