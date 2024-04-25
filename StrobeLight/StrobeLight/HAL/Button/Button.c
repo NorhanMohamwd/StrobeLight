@@ -80,6 +80,7 @@ void button_detectPress(void){
 		result.signal.RIGHT=HIGH;
 		result.signal.arrOfPresses[RIGHT_IND] += 1;
 		result.signal.AUTO_MODE = NO_AUTO_MODE;
+		result.signal.LEFT_PRESSED=SHORT_PRESS;
 	}
 	else if ((current.signal.BACK == HIGH ) && (diff.signal.BACK == HIGH ))
 	{
@@ -87,6 +88,7 @@ void button_detectPress(void){
 		result.signal.BACK=HIGH;
 		result.signal.arrOfPresses[BACK_IND] += 1;
 		result.signal.AUTO_MODE = NO_AUTO_MODE;
+		result.signal.LEFT_PRESSED=SHORT_PRESS;
 	}
 	else if (current.signal.BRAKE == HIGH )
 	{
@@ -105,10 +107,12 @@ void button_detectPress(void){
 				result.signal.BRAKE_PRESSED=SHORT_PRESS;
 				result.signal.arrOfPresses[BRAKE_IND] += 1;
 				result.signal.AUTO_MODE = NO_AUTO_MODE;
+				result.signal.LEFT_PRESSED=SHORT_PRESS;
 			}
 			else {
 				result.signal.BRAKE_PRESSED=LONG_PRESS;
 				result.signal.AUTO_MODE = NO_AUTO_MODE;
+				result.signal.LEFT_PRESSED=SHORT_PRESS;
 			}
 			dio_enableInterruptTrigger(PB,BRAKE_IN,FALLING);
 			brake_edge = FALLING;
@@ -123,6 +127,7 @@ void button_detectPress(void){
 		result.signal.BTN_1=HIGH;
 		result.signal.arrOfPresses[BUTTON_1D] += 1;
 		result.signal.AUTO_MODE = NO_AUTO_MODE;
+		result.signal.LEFT_PRESSED=SHORT_PRESS;
 	}
 	else if ((current.signal.BTN_2 == HIGH ) && (diff.signal.BTN_2 == HIGH ))
 	{
@@ -130,6 +135,7 @@ void button_detectPress(void){
 		result.signal.BTN_2=HIGH;
 		result.signal.arrOfPresses[BUTTON_2D] += 1;
 		result.signal.AUTO_MODE = NO_AUTO_MODE;
+		result.signal.LEFT_PRESSED=SHORT_PRESS;
 	}
 	previousButtonStage = 	current.value;
 	result.signal.previous = current.value;									/*save the current value in the previous one*/

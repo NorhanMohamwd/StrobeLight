@@ -335,7 +335,7 @@ void app_modeC(void){
 	switch (subMode){
 		case LEFT_NOW:
 		{
-			//timer_resetLedCounter();  /*want it in the app runnable before i loop on modeC*/
+			timer_resetLedCounter(); 
 			updatedCounters= timer_getCounter();
 			while (updatedCounters.leds < FIVE_SEC_COUNT)
 			{
