@@ -14,6 +14,8 @@
 #define secCounts 75
 #define _500MS_COUNT 50
 #define BRAKE_MASK   0X04
+#define LEFT_MASK    0X20
+#define RIGHT_MASK   0X01
 typedef enum{
 	LEFT_NOW,
 	RIGHT_NOW,

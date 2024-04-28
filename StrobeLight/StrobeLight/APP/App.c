@@ -36,44 +36,31 @@ void app_init(void)
 
 void app_runnable(void){
 	
+	static bool_t flag_firstEnterRunnable=FALSE;
+	static bool_t flag_ModeChanged=TRUE;
 	//eeprom_read 
-	static uint8_t first_enterA=0;
-	static uint8_t first_enterB=0;
-	static uint8_t first_enterC=0;
-	readModeFromEeprom(&sysMode);
+	if(flag_firstEnterRunnable==FALSE)
+	{
+	readModeFromEeprom(&sysMode);   // to read the mode only when restarting the system 
+	flag_firstEnterRunnable=TRUE;
+	}
 	// Change them to mode state and check for it's variable 
 	// switch_case for modes 
 	if (buttonFlags.signal.BRAKE_PRESSED == LONG_PRESS){
 		if (sysMode==MODE_A){
 			sysMode=MODE_B;
-			if(first_enterA==0){
-				//write eeprom
-				first_enterA=1;
-				first_enterB=0;
-				first_enterC=0;
-				writeModeToEeprom(sysMode);
-			}
+			buttonFlags.signal.previous=0;   // to clear the previous data when first entering the mode  
+			 flag_ModeChanged=TRUE;
 		}
 		else if (sysMode==MODE_B){
 			sysMode=MODE_A;
-				if(first_enterB==0){
-					//write eeprom
-					first_enterA=0;
-					first_enterB=1;
-					first_enterC=0;
-				writeModeToEeprom(sysMode);
-				}
+			 flag_ModeChanged=TRUE;
+			
 		}
 	}
 	else if (buttonFlags.signal.LEFT_PRESSED == LONG_PRESS){
 		sysMode=MODE_C;
-			if(first_enterC==0){
-				//write eeprom
-				first_enterA=0;
-				first_enterB=0;
-				first_enterC=1;
-			writeModeToEeprom(sysMode);
-			}
+		flag_ModeChanged=TRUE;
 	}
 	switch(sysMode)
 	{
@@ -95,7 +82,11 @@ void app_runnable(void){
 		default:
 		break;
 	}
-	
+	if(flag_ModeChanged==TRUE)
+	{
+		writeModeToEeprom(sysMode);  // to write the mode after executing the signal at least one time 
+		flag_ModeChanged==FALSE;
+	}
    
 }
 
@@ -182,7 +173,7 @@ void app_modeA(void){
 		 led_off(STROBE2_OUT);
 	 }
 	 else if (BRAKE)
-	 {
+	 { 
 		 led_off(LEFT_OUT);
 		 led_off(RIGHT_OUT);
 		 led_off(BACK_OUT);
@@ -260,17 +251,16 @@ void app_modeB(void)
 		buttonFlags.signal.BTN_2 = LOW;
 	}
 	
-	// check which signal is on/off 
 	if (LEFT)
 	{
-		// check previous state was brake or not
+		// check previous signal was brake or not
 		if((buttonFlags.signal.previous&BRAKE_MASK))
 		{
 
 			updatedCounters = timer_getCounter();
 			if (updatedCounters.leds >= secCounts)
 			{
-				led_toggle(LEFT_OUT);
+				led_toggle(LEFT_OUT);   // brake then left
 				led_on(RIGHT_OUT);
 				led_off(BACK_OUT);
 				led_off(BRAKE_OUT);
@@ -301,7 +291,7 @@ void app_modeB(void)
 		if((buttonFlags.signal.previous&BRAKE_MASK))
 		{
 			updatedCounters = timer_getCounter();
-			if (updatedCounters.leds >= secCounts)
+			if (updatedCounters.leds >= secCounts)   //brake then right
 			{
 				led_on(LEFT_OUT);
 				led_toggle(RIGHT_OUT);
@@ -339,13 +329,53 @@ void app_modeB(void)
 	}
 	else if (BRAKE)
 	{
-		led_on(LEFT_OUT);
-		led_on(RIGHT_OUT);
-		led_off(BACK_OUT);
-		led_off(BRAKE_OUT);
-		led_off(STROBE1_OUT);
-		led_off(STROBE2_OUT);
+		if((buttonFlags.signal.previous&LEFT_MASK))
+		{
+			updatedCounters = timer_getCounter();
+			if (updatedCounters.leds >= secCounts)
+			{
+				led_toggle(LEFT_OUT);
+				led_off(RIGHT_OUT);
+				led_off(BACK_OUT);
+				led_off(BRAKE_OUT);    // left then brake
+				led_off(STROBE1_OUT);
+				led_off(STROBE2_OUT);
+				timer_resetLedCounter();
+
+
+
+			}
+		}
+		else if ((buttonFlags.signal.previous&RIGHT_MASK))
+		{
+			updatedCounters = timer_getCounter();
+			if (updatedCounters.leds >= secCounts)
+			{
+				led_off(LEFT_OUT);
+				led_toggle(RIGHT_OUT);
+				led_off(BACK_OUT);
+				led_off(BRAKE_OUT);
+				led_off(STROBE1_OUT);    //right then brake
+				led_off(STROBE2_OUT);
+				timer_resetLedCounter();
+
+
+
+			}
+		}
+		else
+		{
+			led_on(LEFT_OUT);
+			led_on(RIGHT_OUT);
+			led_off(BACK_OUT);
+			led_off(BRAKE_OUT);
+			led_off(STROBE1_OUT);
+			led_off(STROBE2_OUT);
+
+
+		}
 	}
+
 	else if (STROBE_1)
 	{
 		led_off(LEFT_OUT);
@@ -375,6 +405,8 @@ void app_modeB(void)
 		led_on (POWER_OFF);
 	}
 }
+
+
 
 void app_modeC(void){
 
