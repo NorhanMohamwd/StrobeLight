@@ -41,7 +41,7 @@ void app_runnable(void){
 	//eeprom_read 
 	if(flag_firstEnterRunnable==FALSE)
 	{
-	readModeFromEeprom(&sysMode);   // to read the mode only when restarting the system 
+	//readModeFromEeprom(&sysMode);   // to read the mode only when restarting the system 
 	flag_firstEnterRunnable=TRUE;
 	}
 	// Change them to mode state and check for it's variable 
@@ -82,11 +82,11 @@ void app_runnable(void){
 		default:
 		break;
 	}
-	if(flag_ModeChanged==TRUE)
-	{
-		writeModeToEeprom(sysMode);  // to write the mode after executing the signal at least one time 
-		flag_ModeChanged==FALSE;
-	}
+// 	if(flag_ModeChanged==TRUE)
+// 	{
+// 		writeModeToEeprom(sysMode);  // to write the mode after executing the signal at least one time 
+// 		flag_ModeChanged==FALSE;
+// 	}
    
 }
 
