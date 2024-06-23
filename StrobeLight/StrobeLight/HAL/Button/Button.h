@@ -62,9 +62,9 @@ union signalsUnion{
 		uint8_t  LEFT          : 1;		/*PORT C PIN0*/
 		button_pressTime  LEFT_PRESSED  : 1;
 		button_pressTime  BRAKE_PRESSED : 1;
-		button_autoMode   AUTO_MODE		: 1;
-		uint8_t	arrOfPresses[6];
-		uint8_t previous     ;
+	//	button_autoMode   AUTO_MODE		: 1;
+	//	uint8_t	arrOfPresses[6];
+	//	uint8_t previous     ;
 	} signal;
 	uint8_t value ;
 };
@@ -76,7 +76,7 @@ void button_init(void);
 /*reads the buttons' values*/
 void button_detectPress(void);
 
-void button_setCallBack(void (*a_ptr)(union signalsUnion));
+void button_setCallBack(void (*a_ptr)(union signalsUnion ,union signalsUnion));
 
 
 #endif /* BUTTON_H_ */
