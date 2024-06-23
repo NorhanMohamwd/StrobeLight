@@ -16,7 +16,7 @@ static void (*g_dioCallBackPtr)(void)=NULLPTR;
  /**To set the status of all pins at once (output, input, or pull-up). **/
 void dio_init(void)
 {  
-	dio_pinNumber pin;
+	dio_pinNumber pin=0;
     bool_t flag_firstIn_PB=FALSE;
     bool_t flag_firstIn_PC=FALSE;
     uint8_t i;

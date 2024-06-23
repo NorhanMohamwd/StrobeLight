@@ -17,8 +17,8 @@
 
  /*** Typedefs ***/
  typedef struct {
-	uint8_t leds;
-	uint8_t buttons;
+    volatile	uint32_t leds;
+	volatile    uint32_t buttons;
  }Timer_counters;
  
 typedef enum{

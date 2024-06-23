@@ -12,10 +12,8 @@
 #include "Button.h"
 
 #define secCounts 75
-#define _500MS_COUNT 50
-#define BRAKE_MASK   0X04
-#define LEFT_MASK    0X20
-#define RIGHT_MASK   0X01
+#define _850MS_COUNT 85
+
 typedef enum{
 	LEFT_NOW,
 	RIGHT_NOW,
@@ -38,7 +36,7 @@ void app_init(void);
 /*processes input signals and turns on/off corresponding leds*/
 void app_runnable(void);
 
-void app_processSignals(union signalsUnion x);
+void app_processSignals(union signalsUnion x,union signalsUnion y);
 
 void app_modeA(void);
 

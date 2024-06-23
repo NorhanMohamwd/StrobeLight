@@ -13,7 +13,7 @@
 
 typedef enum
 {   PIN_LED  =0 ,
-	POWER_OFF   ,
+   // POWER_OFF   ,
 	BRAKE_OUT   ,
 	LEFT_OUT    ,
 	RIGHT_OUT   ,

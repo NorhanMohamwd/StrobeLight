@@ -12,7 +12,7 @@
 
 /* Configurable to change ports and pins for the leds */
 led_Sruct led_arr[TOTAL_LEDS]={{DIO_PIN2,PA},      // pin led
-                               {DIO_PIN1,PA},     //power off               
+                              //{DIO_PIN1,PA},     //power off               
                                {DIO_PIN5,PB},    //brake out
 						       {DIO_PIN3,PC},   // left out	   
 						       {DIO_PIN2,PC},  //right out 	   
