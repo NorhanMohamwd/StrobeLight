@@ -48,7 +48,7 @@ void readModeFromEeprom(uint8_t *pMode) {
   uint8_t value;
  while (GET_BIT(NVMCTRL_STATUS ,EEPROMBUSY));
 	__asm__ __volatile__ (
-	"LDS r16, 0x130B  \n"                   // Load actual user row address     // ( the config MODE_ADRR )
+	"LDS r16, 0x140B  \n"                   // Load actual user row address     // ( the config MODE_ADRR )
 	"STS 0x1008, r16 \n"                   // Write address to NVMCTRL address register
 	 "LDS r18, 0x1006 \n"                 // Read data from NVMCTRL data register
 	 "mov %0, r18 \n"                    // Move data to 'value'

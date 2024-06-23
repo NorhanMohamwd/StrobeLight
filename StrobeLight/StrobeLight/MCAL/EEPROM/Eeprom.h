@@ -15,7 +15,7 @@
 #define USERROW_START_ADDR  0X1300 // external page of eeprom doesn't get erased while flashing
 
 //CONFIG Values
-#define EEPROM_USED_START_ADDR   USERROW_START_ADDR     /*will write to the USER_Row page 
+#define EEPROM_USED_START_ADDR    EEPEOM_START_ADRR    /*will write to the USER_Row page 
                                                           change to EEPROM if wants to write on EEPROM
 														 */  
 #define MODE_ADRR    (EEPROM_USED_START_ADDR+0X000B)    //config between 0 to 32 byte 
